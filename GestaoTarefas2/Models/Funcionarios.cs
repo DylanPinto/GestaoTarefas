@@ -7,5 +7,11 @@ namespace GestaoTarefas2.Models
 {
     public class Funcionarios
     {
+        public int idFuncionario { get; set; }
+
+        public string Nome { get; set; }
+
+        public string NTelemovel { get; set; }
+
     }
 }
