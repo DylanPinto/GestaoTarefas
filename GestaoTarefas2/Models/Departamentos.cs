@@ -8,6 +8,7 @@ namespace GestaoTarefas2.Models
 {
     public class Departamentos
     {
+        [Key]
         public int DepartamentoId { get; set; }
         [Required]
         public string Nome { get; set; }
