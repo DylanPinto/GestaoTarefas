@@ -9,22 +9,22 @@ using GestaoTarefas2.Models;
 
 namespace GestaoTarefas2.Controllers
 {
-    public class TarefasController : Controller
+    public class FuncionariosController : Controller
     {
         private readonly GestaoTarefasDbContext _context;
 
-        public TarefasController(GestaoTarefasDbContext context)
+        public FuncionariosController(GestaoTarefasDbContext context)
         {
             _context = context;
         }
 
-        // GET: Tarefas
+        // GET: Funcionarios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tarefas.ToListAsync());
+            return View(await _context.Funcionarios.ToListAsync());
         }
 
-        // GET: Tarefas/Details/5
+        // GET: Funcionarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var tarefas = await _context.Tarefas
-                .FirstOrDefaultAsync(m => m.TarefaId == id);
-            if (tarefas == null)
+            var funcionarios = await _context.Funcionarios
+                .FirstOrDefaultAsync(m => m.FuncionarioId == id);
+            if (funcionarios == null)
             {
                 return NotFound();
             }
 
-            return View(tarefas);
+            return View(funcionarios);
         }
 
-        // GET: Tarefas/Create
+        // GET: Funcionarios/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tarefas/Create
+        // POST: Funcionarios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao")] Tarefas tarefas)
+        public async Task<IActionResult> Create([Bind("FuncionarioId,Nome,SobreNome,Sexo,NTelemovel,Email,DepartamentoId,CargoId")] Funcionarios funcionarios)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tarefas);
+                _context.Add(funcionarios);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tarefas);
+            return View(funcionarios);
         }
 
-        // GET: Tarefas/Edit/5
+        // GET: Funcionarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var tarefas = await _context.Tarefas.FindAsync(id);
-            if (tarefas == null)
+            var funcionarios = await _context.Funcionarios.FindAsync(id);
+            if (funcionarios == null)
             {
                 return NotFound();
             }
-            return View(tarefas);
+            return View(funcionarios);
         }
 
-        // POST: Tarefas/Edit/5
+        // POST: Funcionarios/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao")] Tarefas tarefas)
+        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId,Nome,SobreNome,Sexo,NTelemovel,Email,DepartamentoId,CargoId")] Funcionarios funcionarios)
         {
-            if (id != tarefas.TarefaId)
+            if (id != funcionarios.FuncionarioId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace GestaoTarefas2.Controllers
             {
                 try
                 {
-                    _context.Update(tarefas);
+                    _context.Update(funcionarios);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TarefasExists(tarefas.TarefaId))
+                    if (!FuncionariosExists(funcionarios.FuncionarioId))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace GestaoTarefas2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tarefas);
+            return View(funcionarios);
         }
 
-        // GET: Tarefas/Delete/5
+        // GET: Funcionarios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var tarefas = await _context.Tarefas
-                .FirstOrDefaultAsync(m => m.TarefaId == id);
-            if (tarefas == null)
+            var funcionarios = await _context.Funcionarios
+                .FirstOrDefaultAsync(m => m.FuncionarioId == id);
+            if (funcionarios == null)
             {
                 return NotFound();
             }
 
-            return View(tarefas);
+            return View(funcionarios);
         }
 
-        // POST: Tarefas/Delete/5
+        // POST: Funcionarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tarefas = await _context.Tarefas.FindAsync(id);
-            _context.Tarefas.Remove(tarefas);
+            var funcionarios = await _context.Funcionarios.FindAsync(id);
+            _context.Funcionarios.Remove(funcionarios);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TarefasExists(int id)
+        private bool FuncionariosExists(int id)
         {
-            return _context.Tarefas.Any(e => e.TarefaId == id);
+            return _context.Funcionarios.Any(e => e.FuncionarioId == id);
         }
     }
 }

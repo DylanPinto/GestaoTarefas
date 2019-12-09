@@ -15,8 +15,8 @@ namespace GestaoTarefas2.Models
         [StringLength(60)]
 
         public string NomeOrdena { get; set; }
-        [StringLength(60)]
-        public string NomeExecuta { get; set; }
+        public int FuncionarioId { get; set; }
+        public Funcionarios Funcionarios { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -25,7 +25,8 @@ namespace GestaoTarefas2.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataFim { get; set; }
 
-        public ICollection<TiposTarefas> Tipo { get; set; }
+        public int TipoId { get; set; }
+        public TiposTarefas TiposTarefas { get; set; }
 
         [StringLength(250)]
         public string Descricao { get; set; }
