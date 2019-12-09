@@ -38,6 +38,9 @@ namespace GestaoTarefas2
 
             services.AddDbContext<DepartamentosContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DepartamentosContext")));
+
+            services.AddDbContext<TarefasContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("TarefasContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

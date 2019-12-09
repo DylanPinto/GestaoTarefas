@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using GestaoTarefas2.Models;
 
 namespace GestaoTarefas2.Data
 {
@@ -12,5 +13,6 @@ namespace GestaoTarefas2.Data
             : base(options)
         {
         }
+        public DbSet<GestaoTarefas2.Models.Tarefas> Tarefas { get; set; }
     }
 }
