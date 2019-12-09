@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestaoTarefas2.Models
 {
-    public class DepartamentosContext : DbContext
+    public class GestaoTarefasDbContext : DbContext
     {
-        public DepartamentosContext (DbContextOptions<DepartamentosContext> options)
+        public GestaoTarefasDbContext (DbContextOptions<GestaoTarefasDbContext> options)
             : base(options)
         {
         }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestaoTarefas2.Migrations
 {
-    [DbContext(typeof(DepartamentosContext))]
+    [DbContext(typeof(GestaoTarefasDbContext))]
     partial class DepartamentosContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

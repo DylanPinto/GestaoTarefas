@@ -11,9 +11,9 @@ namespace GestaoTarefas2.Controllers
 {
     public class DepartamentosController : Controller
     {
-        private readonly DepartamentosContext _context;
+        private readonly GestaoTarefasDbContext _context;
 
-        public DepartamentosController(DepartamentosContext context)
+        public DepartamentosController(GestaoTarefasDbContext context)
         {
             _context = context;
         }

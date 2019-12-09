@@ -36,7 +36,7 @@ namespace GestaoTarefas2
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddDbContext<DepartamentosContext>(options =>
+            services.AddDbContext<GestaoTarefasDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DepartamentosContext")));
         }
 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestaoTarefas2.Migrations
 {
-    [DbContext(typeof(DepartamentosContext))]
+    [DbContext(typeof(GestaoTarefasDbContext))]
     [Migration("20191201011227_initial")]
     partial class initial
     {
