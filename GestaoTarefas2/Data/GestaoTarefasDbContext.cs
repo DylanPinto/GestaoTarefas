@@ -19,5 +19,6 @@ namespace GestaoTarefas2.Models
         public DbSet<GestaoTarefas2.Models.Tarefas> Tarefas { get; set; }
 
         public DbSet<GestaoTarefas2.Models.Funcionarios> Funcionarios { get; set; }
+
     }
 }
