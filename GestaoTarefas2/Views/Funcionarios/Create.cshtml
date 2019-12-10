@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Adicionar Funcionario</h1>
 
 <h4>Funcionarios</h4>
 <hr />
@@ -18,17 +18,20 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SobreNome" class="control-label"></label>
+                <label asp-for="SobreNome" class="control-label">Sobrenome</label>
                 <input asp-for="SobreNome" class="form-control" />
                 <span asp-validation-for="SobreNome" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Sexo" class="control-label"></label>
-                <input asp-for="Sexo" class="form-control" />
+                <select asp-for="Sexo" class="form-control" >
+                    <option>Masculino</option>
+                    <option>Feminino</option>
+                </select>
                 <span asp-validation-for="Sexo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NTelemovel" class="control-label"></label>
+                <label asp-for="NTelemovel" class="control-label">Numero de Telemóvel</label>
                 <input asp-for="NTelemovel" class="form-control" />
                 <span asp-validation-for="NTelemovel" class="text-danger"></span>
             </div>
