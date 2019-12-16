@@ -13,6 +13,7 @@ namespace GestaoTarefas2.Models
         [Required]
         public string Nome { get; set; }
 
+        public ICollection<Funcionarios> Funcionarios { get; set; }
     }
   
 }
