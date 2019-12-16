@@ -11,6 +11,7 @@ namespace GestaoTarefas2.Models
         [Key]
         public int DepartamentoId { get; set; }
         [Required]
+        [StringLength(30, MinimumLength=3)]
         public string Nome { get; set; }
 
         public ICollection<Funcionarios> Funcionarios { get; set; }
