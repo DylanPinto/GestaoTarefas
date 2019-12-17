@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Lista de Funcionarios</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Adicionar Funcionario</a>
 </p>
 <table class="table">
     <thead>
@@ -27,12 +27,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DepartamentoId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CargoId)
-            </th>
+            
+            <th scope="col">Departamento</th>
+            
+            
+            <th scope="col">Cargo</th>
+            
             <th></th>
         </tr>
     </thead>
@@ -55,15 +55,15 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DepartamentoId)
+                @Html.DisplayFor(modelItem => item.Departamentos.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CargoId)
+                @Html.DisplayFor(modelItem => item.Cargos.NomeCargo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FuncionarioId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FuncionarioId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FuncionarioId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.FuncionarioId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.FuncionarioId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.FuncionarioId">Eliminar</a>
             </td>
         </tr>
 }

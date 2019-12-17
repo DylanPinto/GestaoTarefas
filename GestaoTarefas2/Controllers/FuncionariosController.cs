@@ -45,6 +45,8 @@ namespace GestaoTarefas2.Controllers
         // GET: Funcionarios/Create
         public IActionResult Create()
         {
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "Nome");
+            ViewData["CargoId"] = new SelectList(_context.Cargos, "CargoId", "NomeCargo");
             return View();
         }
 
@@ -59,8 +61,13 @@ namespace GestaoTarefas2.Controllers
             {
                 _context.Add(funcionarios);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                ViewBag.Mensagem = "Funcionario adicionado com sucesso";
+                return View("Success");
+
             }
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "Nome", funcionarios.DepartamentoId);
+            ViewData["CargoId"] = new SelectList(_context.Cargos, "CardoId", "NomeCargo",funcionarios.CargoId);
             return View(funcionarios);
         }
 
@@ -77,6 +84,8 @@ namespace GestaoTarefas2.Controllers
             {
                 return NotFound();
             }
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "Nome", funcionarios.DepartamentoId);
+            ViewData["CargoId"] = new SelectList(_context.Cargos, "CardoId", "NomeCargo", funcionarios.CargoId);
             return View(funcionarios);
         }
 
@@ -110,8 +119,11 @@ namespace GestaoTarefas2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                ViewBag.Mensagem = "Informação do funcionario atualizada com sucesso";
+                return View("Success");
             }
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "Nome", funcionarios.DepartamentoId);
+            ViewData["CargoId"] = new SelectList(_context.Cargos, "CardoId", "NomeCargo", funcionarios.CargoId);
             return View(funcionarios);
         }
 
@@ -139,9 +151,23 @@ namespace GestaoTarefas2.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var funcionarios = await _context.Funcionarios.FindAsync(id);
-            _context.Funcionarios.Remove(funcionarios);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (funcionarios == null) {
+                return NotFound();
+            }
+
+            try
+            {
+
+                _context.Funcionarios.Remove(funcionarios);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                return View("ErrorDeleting");
+            }
+
+            ViewBag.Mensagem = "Funcionario eliminado com sucesso!";
+            return View("Success");
         }
 
         private bool FuncionariosExists(int id)

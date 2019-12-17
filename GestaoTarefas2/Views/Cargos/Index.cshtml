@@ -1,0 +1,35 @@
+﻿@model IEnumerable<GestaoTarefas2.Models.Cargos>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cargos</h1>
+
+<p>
+    <a asp-action="Create">Criar novo cargo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeCargo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeCargo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CargoId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.CargoId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.CargoId">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
