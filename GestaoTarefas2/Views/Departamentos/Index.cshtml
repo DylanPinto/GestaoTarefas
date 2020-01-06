@@ -9,9 +9,21 @@
 <p>
     <a asp-action="Create">Criar Novo</a>
 </p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Voltar à Lista</a>
+        </p>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Nome)</a>
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
