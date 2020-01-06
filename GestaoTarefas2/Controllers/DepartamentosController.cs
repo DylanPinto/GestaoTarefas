@@ -24,6 +24,25 @@ namespace GestaoTarefas2.Controllers
             return View(await _context.Departamentos.ToListAsync());
         }
 
+        public async Task<IActionResult> Index(string sortOrder)
+        {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            var departamento = from s in _context.Departamentos
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                   departamento = departamento.OrderByDescending(s => s.Nome);
+                    break;
+                default:
+                    departamento = departamento.OrderBy(s => s.Nome);
+                    break;
+            }
+            return View(await departamento.AsNoTracking().ToListAsync());
+        }
+
+
         // GET: Departamentos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
