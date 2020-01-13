@@ -40,13 +40,16 @@ namespace GestaoTarefas2.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var GestaoTarefasDbContext = _context.Funcionarios.Include(d => d.Departamentos).Include(c => c.Cargos);
+           
             var funcionarios = from f in _context.Funcionarios
                                select  f;
 
            if (!String.IsNullOrEmpty(searchString))
             {
                 funcionarios = funcionarios.Where(f => f.Nome.Contains(searchString) || f.SobreNome.Contains(searchString));
+            } else
+            {
+                var GestaoTarefasDbContext = _context.Funcionarios.Include(d => d.Departamentos).Include(c => c.Cargos);
             }
             
            
