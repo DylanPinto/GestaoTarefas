@@ -19,10 +19,32 @@ namespace GestaoTarefas2.Controllers
         }
 
         // GET: Departamentos
-        public async Task<IActionResult> Index()
+       
+
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            return View(await _context.Departamentos.ToListAsync());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            var departamento = from s in _context.Departamentos
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                departamento = departamento.Where(s => s.Nome.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                   departamento = departamento.OrderByDescending(s => s.Nome);
+                    break;
+                default:
+                    departamento = departamento.OrderBy(s => s.Nome);
+                    break;
+            }
+            return View(await departamento.AsNoTracking().ToListAsync());
         }
+
 
         // GET: Departamentos/Details/5
         public async Task<IActionResult> Details(int? id)
