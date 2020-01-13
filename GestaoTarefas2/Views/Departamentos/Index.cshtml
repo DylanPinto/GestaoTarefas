@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GestaoTarefas2.Models.Departamentos>
+﻿@model PaginatedList<GestaoTarefas2.Models.Departamentos>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,24 +22,42 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Nome)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">Nome</a>
             </th>
-         
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DepartamentoId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.DepartamentoId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.DepartamentoId">Eliminar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DepartamentoId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.DepartamentoId">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.DepartamentoId">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex -1)"
+   asp-route-curentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-secondary @prevDisabled">Anterior</a>
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-curentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-secondary @nextDisabled">Proxima</a>
