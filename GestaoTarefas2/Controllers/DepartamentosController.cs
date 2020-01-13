@@ -13,39 +13,39 @@ namespace GestaoTarefas2.Controllers
     {
         private readonly GestaoTarefasDbContext _context;
 
+        public int PaginasTamanho = 2;
+
         public DepartamentosController(GestaoTarefasDbContext context)
         {
             _context = context;
         }
 
         // GET: Departamentos
-       
 
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+
+        // GET: Departamento
+        public IActionResult Index(int page = 1)
         {
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["CurrentFilter"] = searchString;
+            decimal nuDepartamento = _context.Departamentos.Count();
+            int NUMERO_PAGINAS_ANTES_DEPOIS = ((int)nuDepartamento / PaginasTamanho);
 
-            var departamento = from s in _context.Departamentos
-                           select s;
-            if (!String.IsNullOrEmpty(searchString))
+            if (nuDepartamento % PaginasTamanho == 0)
             {
-                departamento = departamento.Where(s => s.Nome.Contains(searchString));
+                NUMERO_PAGINAS_ANTES_DEPOIS -= 1;
             }
 
-            switch (sortOrder)
+            PaginationDepartamento dp = new PaginationDepartamento
             {
-                case "name_desc":
-                   departamento = departamento.OrderByDescending(s => s.Nome);
-                    break;
-                default:
-                    departamento = departamento.OrderBy(s => s.Nome);
-                    break;
-            }
-            return View(await departamento.AsNoTracking().ToListAsync());
+                Departamento = _context.Departamentos.OrderBy(p => p.Nome).Skip((page - 1) * PaginasTamanho).Take(PaginasTamanho),
+                PagAtual = page,
+                PriPagina = Math.Max(1, page - NUMERO_PAGINAS_ANTES_DEPOIS),
+                TotPaginas = (int)Math.Ceiling(nuDepartamento / PaginasTamanho)
+            };
+
+            dp.UltPagina = Math.Min(dp.TotPaginas, page + NUMERO_PAGINAS_ANTES_DEPOIS);
+
+            return View(dp);
         }
-
-
         // GET: Departamentos/Details/5
         public async Task<IActionResult> Details(int? id)
         {

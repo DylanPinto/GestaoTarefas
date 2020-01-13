@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GestaoTarefas2.Models.Departamentos>
+﻿@model PaginationDepartamento
 
 @{
     ViewData["Title"] = "Index";
@@ -22,26 +22,43 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Nome)</a>
-            </th>
+        <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Nome)</a>
+    </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                Nome
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DepartamentoId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.DepartamentoId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.DepartamentoId">Eliminar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Departamento)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DepartamentoId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.DepartamentoId">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.DepartamentoId">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@for (int i = 1; i <= Model.TotPaginas; i++)
+{
+
+    @if (i == Model.PagAtual)
+    {
+
+        <a href="#" class="btn btn-outline-primary">@i</a>
+
+    }
+    else
+    {
+
+        <a asp-action="Index" asp-route-page="@i" class="btn btn-outline-info">@i</a>
+    }
+}
