@@ -19,9 +19,42 @@ namespace GestaoTarefas2.Controllers
         }
 
         // GET: Funcionarios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber
+            )
         {
-            return View(await _context.Funcionarios.ToListAsync());
+           
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+           
+            var funcionarios = from f in _context.Funcionarios
+                               select  f;
+
+           if (!String.IsNullOrEmpty(searchString))
+            {
+                funcionarios = funcionarios.Where(f => f.Nome.Contains(searchString) || f.SobreNome.Contains(searchString));
+            } else
+            {
+                var GestaoTarefasDbContext = _context.Funcionarios.Include(d => d.Departamentos).Include(c => c.Cargos);
+            }
+            
+           
+            int pageSize = 3;
+            return View(await PaginatedList<Funcionarios>.CreateAsync(funcionarios.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Funcionarios/Details/5
@@ -33,6 +66,9 @@ namespace GestaoTarefas2.Controllers
             }
 
             var funcionarios = await _context.Funcionarios
+                .Include(d => d.Departamentos)
+                .Include(c => c.Cargos)
+                
                 .FirstOrDefaultAsync(m => m.FuncionarioId == id);
             if (funcionarios == null)
             {
@@ -84,8 +120,8 @@ namespace GestaoTarefas2.Controllers
             {
                 return NotFound();
             }
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "Nome", funcionarios.DepartamentoId);
-            ViewData["CargoId"] = new SelectList(_context.Cargos, "CardoId", "NomeCargo", funcionarios.CargoId);
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "Nome");
+            ViewData["CargoId"] = new SelectList(_context.Cargos, "CargoId", "NomeCargo");
             return View(funcionarios);
         }
 
