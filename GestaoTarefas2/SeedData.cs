@@ -14,6 +14,7 @@ namespace GestaoTarefas2.Models
         public static void PopulateDepartamentos(GestaoTarefasDbContext db)
         {
             if (db.Departamentos.Any()) return;
+            
 
             db.Departamentos.AddRange(
                 new Departamentos { Nome = "Informática" },
