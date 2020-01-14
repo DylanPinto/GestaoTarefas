@@ -43,7 +43,8 @@ namespace GestaoTarefas2.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
 
                     b.HasKey("DepartamentoId");
 
@@ -169,7 +170,7 @@ namespace GestaoTarefas2.Migrations
                         .HasForeignKey("CargosCargoId");
 
                     b.HasOne("GestaoTarefas2.Models.Departamentos", "Departamentos")
-                        .WithMany()
+                        .WithMany("Funcionarios")
                         .HasForeignKey("DepartamentosDepartamentoId");
                 });
 

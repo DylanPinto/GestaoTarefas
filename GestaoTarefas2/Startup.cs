@@ -45,8 +45,13 @@ namespace GestaoTarefas2
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                using (var serviceScope = app.ApplicationServices.CreateScope())
+                {
+                    var db = serviceScope.ServiceProvider.GetService<GestaoTarefasDbContext>();
+                    SeedData.Populate(db);
+                }
+                    app.UseDeveloperExceptionPage();
+                    app.UseDatabaseErrorPage();
             }
             else
             {

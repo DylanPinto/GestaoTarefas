@@ -2,7 +2,7 @@
 
 namespace GestaoTarefas2.Migrations
 {
-    public partial class initial3 : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
