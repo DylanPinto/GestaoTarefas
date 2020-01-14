@@ -38,8 +38,8 @@ namespace GestaoTarefas2.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var departamento = from s in _context.Departamentos
-                           select s;
+            var departamento = from d in _context.Departamentos
+                           select d;
             if (!String.IsNullOrEmpty(searchString))
             {
                 departamento = departamento.Where(s => s.Nome.Contains(searchString));
