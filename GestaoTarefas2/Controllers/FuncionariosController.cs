@@ -20,15 +20,22 @@ namespace GestaoTarefas2.Controllers
 
         // GET: Funcionarios
         public async Task<IActionResult> Index(
-            string sortOrder
-           
+            string sortOrder,
+            string searchString
             )
         {
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
 
             var funcionarios = from f in _context.Funcionarios.Include(d => d.Departamentos).Include(c => c.Cargos)
-                               select f;
+                              select f;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                funcionarios = funcionarios.Where(f => f.Nome.Contains(searchString)
+                                                    || f.SobreNome.Contains(searchString)).Include(d => d.Departamentos).Include(c => c.Cargos);
+            }
+
             switch (sortOrder)
             {
                 case "name_desc":
@@ -40,7 +47,7 @@ namespace GestaoTarefas2.Controllers
 
             }
 
-            return View(funcionarios.ToList());
+            return View(await funcionarios.AsNoTracking().ToListAsync());
         }
 
         // GET: Funcionarios/Details/5

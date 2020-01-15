@@ -9,6 +9,15 @@
 <p>
     <a asp-action="Create">Criar novo cargo</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        Procura por nome: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+        <input type="submit" value="Procurar" class="btn btn-default" /> |
+        <a asp-action="Index">Voltar a lista</a>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
