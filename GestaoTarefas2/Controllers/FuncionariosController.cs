@@ -26,33 +26,40 @@ namespace GestaoTarefas2.Controllers
             int? pageNumber
             )
         {
-           
             ViewData["CurrentSort"] = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
 
             if (searchString != null)
             {
                 pageNumber = 1;
-            }
-            else
+            } else
             {
                 searchString = currentFilter;
             }
 
             ViewData["CurrentFilter"] = searchString;
 
-           
-            var funcionarios = from f in _context.Funcionarios
-                               select  f;
 
-           if (!String.IsNullOrEmpty(searchString))
+            var funcionarios = from f in _context.Funcionarios.Include(d => d.Departamentos).Include(c => c.Cargos)
+                              select f;
+            if (!String.IsNullOrEmpty(searchString))
             {
-                funcionarios = funcionarios.Where(f => f.Nome.Contains(searchString) || f.SobreNome.Contains(searchString));
-            } else
-            {
-                var GestaoTarefasDbContext = _context.Funcionarios.Include(d => d.Departamentos).Include(c => c.Cargos);
+                funcionarios = funcionarios.Where(f => f.Nome.Contains(searchString));
+
             }
-            
-           
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    funcionarios = funcionarios.OrderByDescending(f => f.Nome);
+                    break;
+                default:
+                    funcionarios = funcionarios.OrderBy(f => f.Nome);
+                    break;
+
+            }
+
             int pageSize = 3;
             return View(await PaginatedList<Funcionarios>.CreateAsync(funcionarios.AsNoTracking(), pageNumber ?? 1, pageSize));
         }

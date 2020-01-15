@@ -10,6 +10,7 @@
     <a asp-action="Create">Adicionar Funcionario</a>
 </p>
 
+
 <from asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
@@ -24,7 +25,7 @@
     <thead>
         <tr>
             <th scope="col">
-                Nome
+                @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NameSortParm })
             </th>
             <th scope="col">
                 SobreNome
@@ -33,7 +34,7 @@
                 Sexo
             </th>
             <th scope="col">
-               Nº Telemovel
+                Nº Telemovel
             </th>
             <th scope="col">
                 Email
@@ -82,6 +83,7 @@
     </tbody>
 </table>
 
+
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
@@ -97,4 +99,4 @@
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
    asp-route-curentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-secondary @nextDisabled">Proxima</a> 
+   class="btn btn-secondary @nextDisabled">Proxima</a>
