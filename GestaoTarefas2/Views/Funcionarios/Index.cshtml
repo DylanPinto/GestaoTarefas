@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GestaoTarefas2.Models.Funcionarios>
+﻿@model PaginatedList<GestaoTarefas2.Models.Funcionarios>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,6 +10,16 @@
     <a asp-action="Create">Adicionar Funcionario</a>
 </p>
 
+
+<from asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Procura por Nome: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Procurar" class="btn btn-primary" />
+            <a asp-action="Index">Voltar a Lista</a>
+        </p>
+    </div>
+</from>
 
 <table class="table">
     <thead>
@@ -24,7 +34,7 @@
                 Sexo
             </th>
             <th scope="col">
-               Nº Telemovel
+                Nº Telemovel
             </th>
             <th scope="col">
                 Email
@@ -72,3 +82,21 @@
         }
     </tbody>
 </table>
+
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex -1)"
+   asp-route-curentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-secondary @prevDisabled">Anterior</a>
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-curentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-secondary @nextDisabled">Proxima</a>
