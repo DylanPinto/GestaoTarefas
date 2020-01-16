@@ -42,16 +42,16 @@ namespace GestaoTarefas2.Controllers
                            select d;
             if (!String.IsNullOrEmpty(searchString))
             {
-                departamento = departamento.Where(s => s.Nome.Contains(searchString));
+                departamento = departamento.Where(d => d.Nome.Contains(searchString));
             }
 
             switch (sortOrder)
             {
                 case "name_desc":
-                   departamento = departamento.OrderByDescending(s => s.Nome);
+                   departamento = departamento.OrderByDescending(d => d.Nome);
                     break;
                 default:
-                    departamento = departamento.OrderBy(s => s.Nome);
+                    departamento = departamento.OrderBy(d => d.Nome);
                     break;
             }
             int pageSize = 3;
