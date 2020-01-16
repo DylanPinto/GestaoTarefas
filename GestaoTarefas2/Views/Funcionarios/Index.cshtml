@@ -25,7 +25,7 @@
     <thead>
         <tr>
             <th scope="col">
-                @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NameSortParm })
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">Nome</a>
             </th>
             <th scope="col">
                 SobreNome

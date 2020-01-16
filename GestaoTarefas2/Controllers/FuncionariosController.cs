@@ -27,7 +27,7 @@ namespace GestaoTarefas2.Controllers
             )
         {
             ViewData["CurrentSort"] = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 
             if (searchString != null)
@@ -41,27 +41,27 @@ namespace GestaoTarefas2.Controllers
             ViewData["CurrentFilter"] = searchString;
 
 
-            var funcionarios = from f in _context.Funcionarios.Include(d => d.Departamentos).Include(c => c.Cargos)
+            var funcionario = from f in _context.Funcionarios.Include(d => d.Departamentos).Include(c => c.Cargos)
                               select f;
             if (!String.IsNullOrEmpty(searchString))
             {
-                funcionarios = funcionarios.Where(f => f.Nome.Contains(searchString));
+                funcionario = funcionario.Where(f => f.Nome.Contains(searchString));
 
             }
 
             switch (sortOrder)
             {
                 case "name_desc":
-                    funcionarios = funcionarios.OrderByDescending(f => f.Nome);
+                    funcionario = funcionario.OrderByDescending(f => f.Nome);
                     break;
                 default:
-                    funcionarios = funcionarios.OrderBy(f => f.Nome);
+                    funcionario = funcionario.OrderBy(f => f.Nome);
                     break;
 
             }
 
             int pageSize = 3;
-            return View(await PaginatedList<Funcionarios>.CreateAsync(funcionarios.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<Funcionarios>.CreateAsync(funcionario.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Funcionarios/Details/5
