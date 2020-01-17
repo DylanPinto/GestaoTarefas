@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoTarefas2.Migrations
 {
     [DbContext(typeof(GestaoTarefasDbContext))]
-    [Migration("20200114175546_initial")]
-    partial class initial
+    [Migration("20200117222042_Renomear")]
+    partial class Renomear
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace GestaoTarefas2.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("GestaoTarefas2.Models.Cargos", b =>
+            modelBuilder.Entity("GestaoTarefas2.Models.Cargo", b =>
                 {
                     b.Property<int>("CargoId")
                         .ValueGeneratedOnAdd()
@@ -33,10 +33,10 @@ namespace GestaoTarefas2.Migrations
 
                     b.HasKey("CargoId");
 
-                    b.ToTable("Cargos");
+                    b.ToTable("Cargo");
                 });
 
-            modelBuilder.Entity("GestaoTarefas2.Models.Departamentos", b =>
+            modelBuilder.Entity("GestaoTarefas2.Models.Departamento", b =>
                 {
                     b.Property<int>("DepartamentoId")
                         .ValueGeneratedOnAdd()
@@ -50,10 +50,10 @@ namespace GestaoTarefas2.Migrations
 
                     b.HasKey("DepartamentoId");
 
-                    b.ToTable("Departamentos");
+                    b.ToTable("Departamento");
                 });
 
-            modelBuilder.Entity("GestaoTarefas2.Models.Funcionarios", b =>
+            modelBuilder.Entity("GestaoTarefas2.Models.Funcionario", b =>
                 {
                     b.Property<int>("FuncionarioId")
                         .ValueGeneratedOnAdd()
@@ -63,13 +63,7 @@ namespace GestaoTarefas2.Migrations
                     b.Property<int>("CargoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CargosCargoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("DepartamentoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DepartamentosDepartamentoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -96,14 +90,14 @@ namespace GestaoTarefas2.Migrations
 
                     b.HasKey("FuncionarioId");
 
-                    b.HasIndex("CargosCargoId");
+                    b.HasIndex("CargoId");
 
-                    b.HasIndex("DepartamentosDepartamentoId");
+                    b.HasIndex("DepartamentoId");
 
-                    b.ToTable("Funcionarios");
+                    b.ToTable("Funcionario");
                 });
 
-            modelBuilder.Entity("GestaoTarefas2.Models.Tarefas", b =>
+            modelBuilder.Entity("GestaoTarefas2.Models.Tarefa", b =>
                 {
                     b.Property<int>("TarefaId")
                         .ValueGeneratedOnAdd()
@@ -123,9 +117,6 @@ namespace GestaoTarefas2.Migrations
                     b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FuncionariosFuncionarioId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NomeOrdena")
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
@@ -142,11 +133,11 @@ namespace GestaoTarefas2.Migrations
 
                     b.HasKey("TarefaId");
 
-                    b.HasIndex("FuncionariosFuncionarioId");
+                    b.HasIndex("FuncionarioId");
 
                     b.HasIndex("TiposTarefasTipoId");
 
-                    b.ToTable("Tarefas");
+                    b.ToTable("Tarefa");
                 });
 
             modelBuilder.Entity("GestaoTarefas2.Models.TiposTarefas", b =>
@@ -165,22 +156,28 @@ namespace GestaoTarefas2.Migrations
                     b.ToTable("TiposTarefas");
                 });
 
-            modelBuilder.Entity("GestaoTarefas2.Models.Funcionarios", b =>
+            modelBuilder.Entity("GestaoTarefas2.Models.Funcionario", b =>
                 {
-                    b.HasOne("GestaoTarefas2.Models.Cargos", "Cargos")
+                    b.HasOne("GestaoTarefas2.Models.Cargo", "Cargo")
                         .WithMany("Funcionarios")
-                        .HasForeignKey("CargosCargoId");
+                        .HasForeignKey("CargoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("GestaoTarefas2.Models.Departamentos", "Departamentos")
+                    b.HasOne("GestaoTarefas2.Models.Departamento", "Departamento")
                         .WithMany("Funcionarios")
-                        .HasForeignKey("DepartamentosDepartamentoId");
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("GestaoTarefas2.Models.Tarefas", b =>
+            modelBuilder.Entity("GestaoTarefas2.Models.Tarefa", b =>
                 {
-                    b.HasOne("GestaoTarefas2.Models.Funcionarios", "Funcionarios")
+                    b.HasOne("GestaoTarefas2.Models.Funcionario", "Funcionario")
                         .WithMany("Tarefas")
-                        .HasForeignKey("FuncionariosFuncionarioId");
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GestaoTarefas2.Models.TiposTarefas", "TiposTarefas")
                         .WithMany("Tarefas")

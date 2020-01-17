@@ -1,4 +1,4 @@
-﻿@model GestaoTarefas2.Models.Funcionarios
+﻿@model GestaoTarefas2.Models.Funcionario
 
 @{
     ViewData["Title"] = "Delete";
@@ -48,13 +48,13 @@
             @Html.DisplayNameFor(model => model.DepartamentoId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Departamentos.Nome)
+            @Html.DisplayFor(model => model.Departamento.Nome)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cargos.NomeCargo)
+            @Html.DisplayNameFor(model => model.Cargo.NomeCargo)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cargos.NomeCargo)
+            @Html.DisplayFor(model => model.Cargo.NomeCargo)
         </dd>
     </dl>
     
