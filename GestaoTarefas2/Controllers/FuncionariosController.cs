@@ -41,27 +41,27 @@ namespace GestaoTarefas2.Controllers
             ViewData["CurrentFilter"] = searchString;
 
 
-            var funcionarios = from f in _context.Funcionarios.Include(d => d.Departamentos).Include(c => c.Cargos)
+            var funcionario = from f in _context.Funcionario.Include(d => d.Departamento).Include(c => c.Cargo)
                               select f;
             if (!String.IsNullOrEmpty(searchString))
             {
-                funcionarios = funcionarios.Where(f => f.Nome.Contains(searchString));
+                funcionario = funcionario.Where(f => f.Nome.Contains(searchString));
 
             }
 
             switch (sortOrder)
             {
                 case "name_desc":
-                    funcionarios = funcionarios.OrderByDescending(f => f.Nome);
+                    funcionario = funcionario.OrderByDescending(f => f.Nome);
                     break;
                 default:
-                    funcionarios = funcionarios.OrderBy(f => f.Nome);
+                    funcionario = funcionario.OrderBy(f => f.Nome);
                     break;
 
             }
 
             int pageSize = 3;
-            return View(await PaginatedList<Funcionarios>.CreateAsync(funcionarios.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<Funcionario>.CreateAsync(funcionario.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Funcionarios/Details/5
@@ -72,24 +72,24 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var funcionarios = await _context.Funcionarios
-                .Include(d => d.Departamentos)
-                .Include(c => c.Cargos)
+            var funcionario = await _context.Funcionario
+                .Include(d => d.Departamento)
+                .Include(c => c.Cargo)
                 
                 .FirstOrDefaultAsync(m => m.FuncionarioId == id);
-            if (funcionarios == null)
+            if (funcionario == null)
             {
                 return NotFound();
             }
 
-            return View(funcionarios);
+            return View(funcionario);
         }
 
         // GET: Funcionarios/Create
         public IActionResult Create()
         {
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "Nome");
-            ViewData["CargoId"] = new SelectList(_context.Cargos, "CargoId", "NomeCargo");
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamento, "DepartamentoId", "Nome");
+            ViewData["CargoId"] = new SelectList(_context.Cargo, "CargoId", "NomeCargo");
             return View();
         }
 
@@ -98,20 +98,20 @@ namespace GestaoTarefas2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FuncionarioId,Nome,SobreNome,Sexo,NTelemovel,Email,DepartamentoId,CargoId")] Funcionarios funcionarios)
+        public async Task<IActionResult> Create([Bind("FuncionarioId,Nome,SobreNome,Sexo,NTelemovel,Email,DepartamentoId,CargoId")] Funcionario funcionario)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(funcionarios);
+                _context.Add(funcionario);
                 await _context.SaveChangesAsync();
 
                 ViewBag.Mensagem = "Funcionario adicionado com sucesso";
                 return View("Success");
 
             }
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "Nome", funcionarios.DepartamentoId);
-            ViewData["CargoId"] = new SelectList(_context.Cargos, "CardoId", "NomeCargo",funcionarios.CargoId);
-            return View(funcionarios);
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamento, "DepartamentoId", "Nome", funcionario.DepartamentoId);
+            ViewData["CargoId"] = new SelectList(_context.Cargo, "CardoId", "NomeCargo",funcionario.CargoId);
+            return View(funcionario);
         }
 
         // GET: Funcionarios/Edit/5
@@ -122,14 +122,14 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var funcionarios = await _context.Funcionarios.FindAsync(id);
-            if (funcionarios == null)
+            var funcionario = await _context.Funcionario.FindAsync(id);
+            if (funcionario == null)
             {
                 return NotFound();
             }
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "Nome");
-            ViewData["CargoId"] = new SelectList(_context.Cargos, "CargoId", "NomeCargo");
-            return View(funcionarios);
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamento, "DepartamentoId", "Nome");
+            ViewData["CargoId"] = new SelectList(_context.Cargo, "CargoId", "NomeCargo");
+            return View(funcionario);
         }
 
         // POST: Funcionarios/Edit/5
@@ -137,9 +137,9 @@ namespace GestaoTarefas2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId,Nome,SobreNome,Sexo,NTelemovel,Email,DepartamentoId,CargoId")] Funcionarios funcionarios)
+        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId,Nome,SobreNome,Sexo,NTelemovel,Email,DepartamentoId,CargoId")] Funcionario funcionario)
         {
-            if (id != funcionarios.FuncionarioId)
+            if (id != funcionario.FuncionarioId)
             {
                 return NotFound();
             }
@@ -148,12 +148,12 @@ namespace GestaoTarefas2.Controllers
             {
                 try
                 {
-                    _context.Update(funcionarios);
+                    _context.Update(funcionario);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FuncionariosExists(funcionarios.FuncionarioId))
+                    if (!FuncionariosExists(funcionario.FuncionarioId))
                     {
                         return NotFound();
                     }
@@ -165,9 +165,9 @@ namespace GestaoTarefas2.Controllers
                 ViewBag.Mensagem = "Informação do funcionario atualizada com sucesso";
                 return View("Success");
             }
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "DepartamentoId", "Nome", funcionarios.DepartamentoId);
-            ViewData["CargoId"] = new SelectList(_context.Cargos, "CardoId", "NomeCargo", funcionarios.CargoId);
-            return View(funcionarios);
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamento, "DepartamentoId", "Nome", funcionario.DepartamentoId);
+            ViewData["CargoId"] = new SelectList(_context.Cargo, "CardoId", "NomeCargo", funcionario.CargoId);
+            return View(funcionario);
         }
 
         // GET: Funcionarios/Delete/5
@@ -178,14 +178,14 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var funcionarios = await _context.Funcionarios
+            var funcionario = await _context.Funcionario
                 .FirstOrDefaultAsync(m => m.FuncionarioId == id);
-            if (funcionarios == null)
+            if (funcionario == null)
             {
                 return NotFound();
             }
 
-            return View(funcionarios);
+            return View(funcionario);
         }
 
         // POST: Funcionarios/Delete/5
@@ -193,15 +193,15 @@ namespace GestaoTarefas2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var funcionarios = await _context.Funcionarios.FindAsync(id);
-            if (funcionarios == null) {
+            var funcionario = await _context.Funcionario.FindAsync(id);
+            if (funcionario == null) {
                 return NotFound();
             }
 
             try
             {
 
-                _context.Funcionarios.Remove(funcionarios);
+                _context.Funcionario.Remove(funcionario);
                 await _context.SaveChangesAsync();
             }
             catch
@@ -215,7 +215,7 @@ namespace GestaoTarefas2.Controllers
 
         private bool FuncionariosExists(int id)
         {
-            return _context.Funcionarios.Any(e => e.FuncionarioId == id);
+            return _context.Funcionario.Any(e => e.FuncionarioId == id);
         }
     }
 }

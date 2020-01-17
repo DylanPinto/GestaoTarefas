@@ -1,4 +1,4 @@
-﻿@model PaginatedList<GestaoTarefas2.Models.Funcionarios>
+﻿@model PaginatedList<GestaoTarefas2.Models.Funcionario>
 
 @{
     ViewData["Title"] = "Index";
@@ -68,10 +68,10 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Departamentos.Nome)
+                    @Html.DisplayFor(modelItem => item.Departamento.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Cargos.NomeCargo)
+                    @Html.DisplayFor(modelItem => item.Cargo.NomeCargo)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.FuncionarioId">Editar</a> |

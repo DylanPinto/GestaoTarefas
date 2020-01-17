@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestaoTarefas2.Models
 {
-    public class Funcionarios
+    public class Funcionario
     {
         [Key]
         public int FuncionarioId { get; set; }
@@ -26,11 +26,11 @@ namespace GestaoTarefas2.Models
         public string Email { get; set; }
 
         public int DepartamentoId { get; set; }
-        public Departamentos Departamentos { get; set; }
+        public Departamento Departamento { get; set; }
 
         public int CargoId { get; set; }
-        public Cargos Cargos { get; set; }
+        public Cargo Cargo { get; set; }
 
-        public ICollection<Tarefas> Tarefas { get; set; }
+        public ICollection<Tarefa> Tarefas { get; set; }
     }
 }

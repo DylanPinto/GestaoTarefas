@@ -14,13 +14,13 @@ namespace GestaoTarefas2.Models
         {
         }
 
-        public DbSet<GestaoTarefas2.Models.Departamentos> Departamentos { get; set; }
+        public DbSet<GestaoTarefas2.Models.Departamento> Departamento { get; set; }
 
-        public DbSet<GestaoTarefas2.Models.Tarefas> Tarefas { get; set; }
+        public DbSet<GestaoTarefas2.Models.Tarefa> Tarefa { get; set; }
 
-        public DbSet<GestaoTarefas2.Models.Funcionarios> Funcionarios { get; set; }
+        public DbSet<GestaoTarefas2.Models.Funcionario> Funcionario { get; set; }
 
-        public DbSet<GestaoTarefas2.Models.Cargos> Cargos { get; set; }
+        public DbSet<GestaoTarefas2.Models.Cargo> Cargo { get; set; }
 
     }
 }

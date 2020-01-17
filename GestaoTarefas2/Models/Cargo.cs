@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace GestaoTarefas2.Models
 {
-    public class Cargos
+    public class Cargo
     {
         [Key]
         public int CargoId { get; set; }
 
         public string NomeCargo { get; set; }
 
-        public ICollection<Funcionarios> Funcionarios { get; set; }
+        public ICollection<Funcionario> Funcionarios { get; set; }
 
     }
 }

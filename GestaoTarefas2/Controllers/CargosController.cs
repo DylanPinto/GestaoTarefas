@@ -21,7 +21,7 @@ namespace GestaoTarefas2.Controllers
         // GET: Cargos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cargos.ToListAsync());
+            return View(await _context.Cargo.ToListAsync());
         }
 
         // GET: Cargos/Details/5
@@ -32,14 +32,14 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var cargos = await _context.Cargos
+            var cargo = await _context.Cargo
                 .FirstOrDefaultAsync(m => m.CargoId == id);
-            if (cargos == null)
+            if (cargo == null)
             {
                 return NotFound();
             }
 
-            return View(cargos);
+            return View(cargo);
         }
 
         // GET: Cargos/Create
@@ -53,15 +53,15 @@ namespace GestaoTarefas2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CargoId,NomeCargo")] Cargos cargos)
+        public async Task<IActionResult> Create([Bind("CargoId,NomeCargo")] Cargo cargo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cargos);
+                _context.Add(cargo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cargos);
+            return View(cargo);
         }
 
         // GET: Cargos/Edit/5
@@ -72,12 +72,12 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var cargos = await _context.Cargos.FindAsync(id);
-            if (cargos == null)
+            var cargo = await _context.Cargo.FindAsync(id);
+            if (cargo == null)
             {
                 return NotFound();
             }
-            return View(cargos);
+            return View(cargo);
         }
 
         // POST: Cargos/Edit/5
@@ -85,9 +85,9 @@ namespace GestaoTarefas2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CargoId,NomeCargo")] Cargos cargos)
+        public async Task<IActionResult> Edit(int id, [Bind("CargoId,NomeCargo")] Cargo cargo)
         {
-            if (id != cargos.CargoId)
+            if (id != cargo.CargoId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace GestaoTarefas2.Controllers
             {
                 try
                 {
-                    _context.Update(cargos);
+                    _context.Update(cargo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CargosExists(cargos.CargoId))
+                    if (!CargosExists(cargo.CargoId))
                     {
                         return NotFound();
                     }
@@ -112,7 +112,7 @@ namespace GestaoTarefas2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cargos);
+            return View(cargo);
         }
 
         // GET: Cargos/Delete/5
@@ -123,14 +123,14 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var cargos = await _context.Cargos
+            var cargo = await _context.Cargo
                 .FirstOrDefaultAsync(m => m.CargoId == id);
-            if (cargos == null)
+            if (cargo == null)
             {
                 return NotFound();
             }
 
-            return View(cargos);
+            return View(cargo);
         }
 
         // POST: Cargos/Delete/5
@@ -138,15 +138,15 @@ namespace GestaoTarefas2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cargos = await _context.Cargos.FindAsync(id);
-            _context.Cargos.Remove(cargos);
+            var cargo = await _context.Cargo.FindAsync(id);
+            _context.Cargo.Remove(cargo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CargosExists(int id)
         {
-            return _context.Cargos.Any(e => e.CargoId == id);
+            return _context.Cargo.Any(e => e.CargoId == id);
         }
     }
 }
