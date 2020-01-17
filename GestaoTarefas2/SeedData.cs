@@ -13,16 +13,16 @@ namespace GestaoTarefas2.Models
         }
         public static void PopulateDepartamentos(GestaoTarefasDbContext db)
         {
-            if (db.Departamentos.Any()) return;
+            if (db.Departamento.Any()) return;
             
 
-            db.Departamentos.AddRange(
-                new Departamentos { Nome = "Informática" },
-                new Departamentos { Nome = "Contabilidade" },
-                new Departamentos { Nome = "Civil" },
-                new Departamentos { Nome = "Bar" },
-                new Departamentos { Nome = "Cantina" },
-                new Departamentos { Nome = "Secretaria" }
+            db.Departamento.AddRange(
+                new Departamento { Nome = "Informática" },
+                new Departamento { Nome = "Contabilidade" },
+                new Departamento { Nome = "Civil" },
+                new Departamento { Nome = "Bar" },
+                new Departamento { Nome = "Cantina" },
+                new Departamento { Nome = "Secretaria" }
                 );
             db.SaveChanges();
         }

@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoTarefas2.Migrations
 {
-    public partial class Initial : Migration
+    public partial class RenomearCorreccao : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Cargos",
+                name: "Cargo",
                 columns: table => new
                 {
                     CargoId = table.Column<int>(nullable: false)
@@ -17,20 +17,20 @@ namespace GestaoTarefas2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cargos", x => x.CargoId);
+                    table.PrimaryKey("PK_Cargo", x => x.CargoId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Departamentos",
+                name: "Departamento",
                 columns: table => new
                 {
                     DepartamentoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: false)
+                    Nome = table.Column<string>(maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Departamentos", x => x.DepartamentoId);
+                    table.PrimaryKey("PK_Departamento", x => x.DepartamentoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,7 +47,7 @@ namespace GestaoTarefas2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Funcionarios",
+                name: "Funcionario",
                 columns: table => new
                 {
                     FuncionarioId = table.Column<int>(nullable: false)
@@ -58,29 +58,27 @@ namespace GestaoTarefas2.Migrations
                     NTelemovel = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     DepartamentoId = table.Column<int>(nullable: false),
-                    DepartamentosDepartamentoId = table.Column<int>(nullable: true),
-                    CargoId = table.Column<int>(nullable: false),
-                    CargosCargoId = table.Column<int>(nullable: true)
+                    CargoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Funcionarios", x => x.FuncionarioId);
+                    table.PrimaryKey("PK_Funcionario", x => x.FuncionarioId);
                     table.ForeignKey(
-                        name: "FK_Funcionarios_Cargos_CargosCargoId",
-                        column: x => x.CargosCargoId,
-                        principalTable: "Cargos",
+                        name: "FK_Funcionario_Cargo_CargoId",
+                        column: x => x.CargoId,
+                        principalTable: "Cargo",
                         principalColumn: "CargoId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Funcionarios_Departamentos_DepartamentosDepartamentoId",
-                        column: x => x.DepartamentosDepartamentoId,
-                        principalTable: "Departamentos",
+                        name: "FK_Funcionario_Departamento_DepartamentoId",
+                        column: x => x.DepartamentoId,
+                        principalTable: "Departamento",
                         principalColumn: "DepartamentoId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tarefas",
+                name: "Tarefa",
                 columns: table => new
                 {
                     TarefaId = table.Column<int>(nullable: false)
@@ -88,7 +86,6 @@ namespace GestaoTarefas2.Migrations
                     NomeTarefa = table.Column<string>(maxLength: 60, nullable: true),
                     NomeOrdena = table.Column<string>(maxLength: 60, nullable: true),
                     FuncionarioId = table.Column<int>(nullable: false),
-                    FuncionariosFuncionarioId = table.Column<int>(nullable: true),
                     DataInicio = table.Column<DateTime>(nullable: false),
                     DataFim = table.Column<DateTime>(nullable: false),
                     TipoId = table.Column<int>(nullable: false),
@@ -97,15 +94,15 @@ namespace GestaoTarefas2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tarefas", x => x.TarefaId);
+                    table.PrimaryKey("PK_Tarefa", x => x.TarefaId);
                     table.ForeignKey(
-                        name: "FK_Tarefas_Funcionarios_FuncionariosFuncionarioId",
-                        column: x => x.FuncionariosFuncionarioId,
-                        principalTable: "Funcionarios",
+                        name: "FK_Tarefa_Funcionario_FuncionarioId",
+                        column: x => x.FuncionarioId,
+                        principalTable: "Funcionario",
                         principalColumn: "FuncionarioId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tarefas_TiposTarefas_TiposTarefasTipoId",
+                        name: "FK_Tarefa_TiposTarefas_TiposTarefasTipoId",
                         column: x => x.TiposTarefasTipoId,
                         principalTable: "TiposTarefas",
                         principalColumn: "TipoId",
@@ -113,42 +110,42 @@ namespace GestaoTarefas2.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funcionarios_CargosCargoId",
-                table: "Funcionarios",
-                column: "CargosCargoId");
+                name: "IX_Funcionario_CargoId",
+                table: "Funcionario",
+                column: "CargoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funcionarios_DepartamentosDepartamentoId",
-                table: "Funcionarios",
-                column: "DepartamentosDepartamentoId");
+                name: "IX_Funcionario_DepartamentoId",
+                table: "Funcionario",
+                column: "DepartamentoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tarefas_FuncionariosFuncionarioId",
-                table: "Tarefas",
-                column: "FuncionariosFuncionarioId");
+                name: "IX_Tarefa_FuncionarioId",
+                table: "Tarefa",
+                column: "FuncionarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tarefas_TiposTarefasTipoId",
-                table: "Tarefas",
+                name: "IX_Tarefa_TiposTarefasTipoId",
+                table: "Tarefa",
                 column: "TiposTarefasTipoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Tarefas");
+                name: "Tarefa");
 
             migrationBuilder.DropTable(
-                name: "Funcionarios");
+                name: "Funcionario");
 
             migrationBuilder.DropTable(
                 name: "TiposTarefas");
 
             migrationBuilder.DropTable(
-                name: "Cargos");
+                name: "Cargo");
 
             migrationBuilder.DropTable(
-                name: "Departamentos");
+                name: "Departamento");
         }
     }
 }

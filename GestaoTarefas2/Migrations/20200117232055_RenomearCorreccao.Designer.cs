@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoTarefas2.Migrations
 {
     [DbContext(typeof(GestaoTarefasDbContext))]
-    [Migration("20200117222042_Renomear")]
-    partial class Renomear
+    [Migration("20200117232055_RenomearCorreccao")]
+    partial class RenomearCorreccao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
