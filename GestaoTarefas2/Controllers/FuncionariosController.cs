@@ -33,21 +33,22 @@ namespace GestaoTarefas2.Controllers
             if (searchString != null)
             {
                 pageNumber = 1;
-            } else
+            }
+            else
             {
                 searchString = currentFilter;
             }
 
             ViewData["CurrentFilter"] = searchString;
 
-
             var funcionario = from f in _context.Funcionario.Include(d => d.Departamento).Include(c => c.Cargo)
                               select f;
+
             if (!String.IsNullOrEmpty(searchString))
             {
-                funcionario = funcionario.Where(f => f.Nome.Contains(searchString));
-
+                funcionario = funcionario.Where(d => d.Nome.Contains(searchString));
             }
+
 
             switch (sortOrder)
             {
