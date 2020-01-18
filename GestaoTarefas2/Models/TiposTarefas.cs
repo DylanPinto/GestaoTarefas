@@ -13,6 +13,6 @@ namespace GestaoTarefas2.Models
         [Required]
         public string TipoTarefa { get; set; }
 
-        public ICollection<Tarefas> Tarefas { get; set; }
+        public ICollection<Tarefa> Tarefas { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model GestaoTarefas2.Models.Cargo
+﻿@model GestaoTarefas2.Models.TiposTarefas
 
 @{
     ViewData["Title"] = "Details";
@@ -7,18 +7,18 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Cargos</h4>
+    <h4>TiposTarefas</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NomeCargo)
+            @Html.DisplayNameFor(model => model.TipoTarefa)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NomeCargo)
+            @Html.DisplayFor(model => model.TipoTarefa)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.CargoId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.TipoId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

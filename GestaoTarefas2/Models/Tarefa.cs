@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestaoTarefas2.Models
 {
-    public class Tarefas
+    public class Tarefa
     {
         [Key]
         public int TarefaId { get; set; }
@@ -16,7 +16,7 @@ namespace GestaoTarefas2.Models
 
         public string NomeOrdena { get; set; }
         public int FuncionarioId { get; set; }
-        public Funcionarios Funcionarios { get; set; }
+        public Funcionario Funcionario { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]

@@ -21,7 +21,7 @@ namespace GestaoTarefas2.Controllers
         // GET: Tarefas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tarefas.ToListAsync());
+            return View(await _context.Tarefa.ToListAsync());
         }
 
         // GET: Tarefas/Details/5
@@ -32,14 +32,14 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var tarefas = await _context.Tarefas
+            var tarefa = await _context.Tarefa
                 .FirstOrDefaultAsync(m => m.TarefaId == id);
-            if (tarefas == null)
+            if (tarefa == null)
             {
                 return NotFound();
             }
 
-            return View(tarefas);
+            return View(tarefa);
         }
 
         // GET: Tarefas/Create
@@ -53,15 +53,15 @@ namespace GestaoTarefas2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao")] Tarefas tarefas)
+        public async Task<IActionResult> Create([Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao")] Tarefa tarefa)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tarefas);
+                _context.Add(tarefa);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tarefas);
+            return View(tarefa);
         }
 
         // GET: Tarefas/Edit/5
@@ -72,12 +72,12 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var tarefas = await _context.Tarefas.FindAsync(id);
-            if (tarefas == null)
+            var tarefa = await _context.Tarefa.FindAsync(id);
+            if (tarefa == null)
             {
                 return NotFound();
             }
-            return View(tarefas);
+            return View(tarefa);
         }
 
         // POST: Tarefas/Edit/5
@@ -85,9 +85,9 @@ namespace GestaoTarefas2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao")] Tarefas tarefas)
+        public async Task<IActionResult> Edit(int id, [Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao")] Tarefa tarefa)
         {
-            if (id != tarefas.TarefaId)
+            if (id != tarefa.TarefaId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace GestaoTarefas2.Controllers
             {
                 try
                 {
-                    _context.Update(tarefas);
+                    _context.Update(tarefa);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TarefasExists(tarefas.TarefaId))
+                    if (!TarefasExists(tarefa.TarefaId))
                     {
                         return NotFound();
                     }
@@ -112,7 +112,7 @@ namespace GestaoTarefas2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tarefas);
+            return View(tarefa);
         }
 
         // GET: Tarefas/Delete/5
@@ -123,14 +123,14 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var tarefas = await _context.Tarefas
+            var tarefa = await _context.Tarefa
                 .FirstOrDefaultAsync(m => m.TarefaId == id);
-            if (tarefas == null)
+            if (tarefa == null)
             {
                 return NotFound();
             }
 
-            return View(tarefas);
+            return View(tarefa);
         }
 
         // POST: Tarefas/Delete/5
@@ -138,15 +138,15 @@ namespace GestaoTarefas2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tarefas = await _context.Tarefas.FindAsync(id);
-            _context.Tarefas.Remove(tarefas);
+            var tarefa = await _context.Tarefa.FindAsync(id);
+            _context.Tarefa.Remove(tarefa);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TarefasExists(int id)
         {
-            return _context.Tarefas.Any(e => e.TarefaId == id);
+            return _context.Tarefa.Any(e => e.TarefaId == id);
         }
     }
 }

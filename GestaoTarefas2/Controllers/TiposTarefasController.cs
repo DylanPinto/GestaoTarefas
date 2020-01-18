@@ -9,22 +9,22 @@ using GestaoTarefas2.Models;
 
 namespace GestaoTarefas2.Controllers
 {
-    public class CargosController : Controller
+    public class TiposTarefasController : Controller
     {
         private readonly GestaoTarefasDbContext _context;
 
-        public CargosController(GestaoTarefasDbContext context)
+        public TiposTarefasController(GestaoTarefasDbContext context)
         {
             _context = context;
         }
 
-        // GET: Cargos
+        // GET: TiposTarefas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cargo.ToListAsync());
+            return View(await _context.TiposTarefas.ToListAsync());
         }
 
-        // GET: Cargos/Details/5
+        // GET: TiposTarefas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var cargo = await _context.Cargo
-                .FirstOrDefaultAsync(m => m.CargoId == id);
-            if (cargo == null)
+            var tiposTarefas = await _context.TiposTarefas
+                .FirstOrDefaultAsync(m => m.TipoId == id);
+            if (tiposTarefas == null)
             {
                 return NotFound();
             }
 
-            return View(cargo);
+            return View(tiposTarefas);
         }
 
-        // GET: Cargos/Create
+        // GET: TiposTarefas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Cargos/Create
+        // POST: TiposTarefas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CargoId,NomeCargo")] Cargo cargo)
+        public async Task<IActionResult> Create([Bind("TipoId,TipoTarefa")] TiposTarefas tiposTarefas)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cargo);
+                _context.Add(tiposTarefas);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cargo);
+            return View(tiposTarefas);
         }
 
-        // GET: Cargos/Edit/5
+        // GET: TiposTarefas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var cargo = await _context.Cargo.FindAsync(id);
-            if (cargo == null)
+            var tiposTarefas = await _context.TiposTarefas.FindAsync(id);
+            if (tiposTarefas == null)
             {
                 return NotFound();
             }
-            return View(cargo);
+            return View(tiposTarefas);
         }
 
-        // POST: Cargos/Edit/5
+        // POST: TiposTarefas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CargoId,NomeCargo")] Cargo cargo)
+        public async Task<IActionResult> Edit(int id, [Bind("TipoId,TipoTarefa")] TiposTarefas tiposTarefas)
         {
-            if (id != cargo.CargoId)
+            if (id != tiposTarefas.TipoId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace GestaoTarefas2.Controllers
             {
                 try
                 {
-                    _context.Update(cargo);
+                    _context.Update(tiposTarefas);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CargosExists(cargo.CargoId))
+                    if (!TiposTarefasExists(tiposTarefas.TipoId))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace GestaoTarefas2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cargo);
+            return View(tiposTarefas);
         }
 
-        // GET: Cargos/Delete/5
+        // GET: TiposTarefas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
 
-            var cargo = await _context.Cargo
-                .FirstOrDefaultAsync(m => m.CargoId == id);
-            if (cargo == null)
+            var tiposTarefas = await _context.TiposTarefas
+                .FirstOrDefaultAsync(m => m.TipoId == id);
+            if (tiposTarefas == null)
             {
                 return NotFound();
             }
 
-            return View(cargo);
+            return View(tiposTarefas);
         }
 
-        // POST: Cargos/Delete/5
+        // POST: TiposTarefas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cargo = await _context.Cargo.FindAsync(id);
-            _context.Cargo.Remove(cargo);
+            var tiposTarefas = await _context.TiposTarefas.FindAsync(id);
+            _context.TiposTarefas.Remove(tiposTarefas);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CargosExists(int id)
+        private bool TiposTarefasExists(int id)
         {
-            return _context.Cargo.Any(e => e.CargoId == id);
+            return _context.TiposTarefas.Any(e => e.TipoId == id);
         }
     }
 }
