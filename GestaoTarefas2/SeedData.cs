@@ -31,7 +31,7 @@ namespace GestaoTarefas2.Models
 
         public static void PopulateDepartamentos(GestaoTarefasDbContext db)
         {
-            if (db.Departamento.Any()) return;
+            if (db.Departamento.Any()) return; 
             
 
             db.Departamento.AddRange(
