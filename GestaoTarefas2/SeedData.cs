@@ -10,10 +10,28 @@ namespace GestaoTarefas2.Models
         public static void Populate(GestaoTarefasDbContext db)
         {
             PopulateDepartamentos(db);
+            PopulateCargos(db);
+            PopulateTiposTarefas(db);
         }
+
+       
+
+        private static void PopulateCargos(GestaoTarefasDbContext db)
+        {
+            if (db.Cargo.Any()) return;
+
+            db.Cargo.AddRange(
+                new Cargo { NomeCargo = "Diretor"},
+                new Cargo { NomeCargo = "Funcionário" },
+                new Cargo { NomeCargo = "Professor" },
+                new Cargo { NomeCargo = "Estagiário" }
+                );
+            db.SaveChanges();
+        }
+
         public static void PopulateDepartamentos(GestaoTarefasDbContext db)
         {
-            if (db.Departamento.Any()) return;
+            if (db.Departamento.Any()) return; 
             
 
             db.Departamento.AddRange(
@@ -22,7 +40,24 @@ namespace GestaoTarefas2.Models
                 new Departamento { Nome = "Civil" },
                 new Departamento { Nome = "Bar" },
                 new Departamento { Nome = "Cantina" },
-                new Departamento { Nome = "Secretaria" }
+                new Departamento { Nome = "Secretaria" },
+                new Departamento { Nome = "Manutenção" },
+                new Departamento { Nome = "Tesouraria" }
+                
+                );
+            db.SaveChanges();
+        }
+
+        private static void PopulateTiposTarefas(GestaoTarefasDbContext db)
+        {
+            if (db.TiposTarefas.Any()) return;
+
+            db.TiposTarefas.AddRange(
+                new TiposTarefas {TipoTarefa = "Comprar" },
+                new TiposTarefas { TipoTarefa = "Transporte" },
+                new TiposTarefas { TipoTarefa = "Manutenção" },
+                new TiposTarefas { TipoTarefa = "Limpeza" },
+                new TiposTarefas { TipoTarefa = "Outra" }
                 );
             db.SaveChanges();
         }
