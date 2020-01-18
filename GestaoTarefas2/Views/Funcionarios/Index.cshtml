@@ -11,15 +11,15 @@
 </p>
 
 
-<form asp-action="Index" method="get">
+<from asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Pesquisar por nome: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input type="submit" value="Procurar" class="btn btn-primary" /> |
-            <a asp-action="Index">Voltar a lista</a>
+            Procura por Nome: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Procurar" class="btn btn-primary" />
+            <a asp-action="Index">Voltar a Lista</a>
         </p>
     </div>
-</form>
+</from>
 
 <table class="table">
     <thead>
