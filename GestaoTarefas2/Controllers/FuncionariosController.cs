@@ -46,7 +46,7 @@ namespace GestaoTarefas2.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                funcionario = funcionario.Where(d => d.Nome.Contains(searchString));
+                funcionario = funcionario.Where(f => f.Nome.Contains(searchString) || f.SobreNome.Contains(searchString) || f.Sexo.Contains(searchString) || f.Email.Contains(searchString));
             }
 
 
