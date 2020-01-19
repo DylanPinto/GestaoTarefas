@@ -94,9 +94,12 @@ namespace GestaoTarefas2.Controllers
             {
                 _context.Add(departamento);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                ViewBag.Mensagem = "Departamento adicionado com sucesso";
+                return View("Success");
             }
             return View(departamento);
+
         }
 
         // GET: Departamento/Edit/5
@@ -145,7 +148,8 @@ namespace GestaoTarefas2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                ViewBag.Mensagem = "Informação do departamento atualizada com sucesso";
+                return View("Success");
             }
             return View(departamento);
         }
@@ -174,9 +178,25 @@ namespace GestaoTarefas2.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var departamento = await _context.Departamento.FindAsync(id);
-            _context.Departamento.Remove(departamento);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            
+            if (departamento == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+
+                _context.Departamento.Remove(departamento);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                return View("ErrorDeleting");
+            }
+
+            ViewBag.Mensagem = "Departamento eliminado com sucesso!";
+            return View("Success");
         }
 
         private bool DepartamentosExists(int id)
