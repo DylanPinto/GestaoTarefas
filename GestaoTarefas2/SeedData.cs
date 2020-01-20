@@ -17,6 +17,7 @@ namespace GestaoTarefas2.Models
             PopulateCargos(db);
             PopulateTiposTarefas(db);
             PopulateFuncionarios(db);
+
         }
         public static void PopulateDepartamentos(GestaoTarefasDbContext db)
         {
