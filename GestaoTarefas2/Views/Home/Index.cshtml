@@ -15,16 +15,8 @@
 
 <div class="container-fluid">
     <hr />
-    @if (User.IsInRole("admin"))
-    {
-
-        <a asp-action="_Layout" class="btn btn-outline-dark">Food menus</a>
-        <section id="comandos">
-            <button type="button" class="btn btn-info">Info</button>
-        </section>
-    }
-    else
-    {
+    
+    
 
         <section id="sobre">
 
@@ -53,5 +45,5 @@
             </div>
 
         </section>
-    }
+    
 </div>
