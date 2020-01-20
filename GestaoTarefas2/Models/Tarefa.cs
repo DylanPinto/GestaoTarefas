@@ -15,6 +15,8 @@ namespace GestaoTarefas2.Models
         [StringLength(60)]
 
         public string NomeOrdena { get; set; }
+
+        public string NomeExecuta { get; set; }
         public int FuncionarioId { get; set; }
         public Funcionario Funcionario { get; set; }
 

@@ -19,7 +19,10 @@
                 @Html.DisplayNameFor(model => model.NomeOrdena)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FuncionarioId)
+                @Html.DisplayNameFor(model => model.NomeExecuta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Funcionario)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DataInicio)
@@ -46,7 +49,10 @@
                 @Html.DisplayFor(modelItem => item.NomeOrdena)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FuncionarioId)
+                @Html.DisplayFor(modelItem => item.NomeExecuta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Funcionario.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DataInicio)
