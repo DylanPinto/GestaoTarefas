@@ -19,18 +19,31 @@
 
                 <div class="navbar-collapse collapse" id="navbarColor01" style="">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" asp-area="" asp-controller="Departamentos" asp-action="Index">Departamentos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Cargos" asp-action="Index">Cargos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Funcionarios" asp-action="Index">Funcionarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Tarefas" asp-action="Index">Tarefas</a>
-                        </li>
+                        @if (User.IsInRole("manager") || User.IsInRole("admin"))
+                        {
+
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-area="" asp-controller="Departamentos" asp-action="Index">Departamentos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Cargos" asp-action="Index">Cargos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Funcionarios" asp-action="Index">Funcionarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Tarefas" asp-action="Index">Tarefas</a>
+                            </li>
+                        }
+                        else if (User.IsInRole("funcionario"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Tarefas" asp-action="Create">Adicionar Tarefa</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Tarefas" asp-action="Index">Minha Tarefas</a>
+                            </li>
+                        }
                     </ul>
                     
                 </div>
