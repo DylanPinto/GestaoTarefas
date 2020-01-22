@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoTarefas2.Migrations
 {
     [DbContext(typeof(GestaoTarefasDbContext))]
-    [Migration("20200122165155_updateTarefa5")]
-    partial class updateTarefa5
+    [Migration("20200122184447_teste1")]
+    partial class teste1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -128,7 +128,7 @@ namespace GestaoTarefas2.Migrations
                     b.Property<int>("TipoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TiposTarefasTipoId")
+                    b.Property<int?>("TipoTarefaTipoId")
                         .HasColumnType("int");
 
                     b.Property<string>("estadoTarefa")
@@ -138,25 +138,25 @@ namespace GestaoTarefas2.Migrations
 
                     b.HasIndex("FuncionarioId");
 
-                    b.HasIndex("TiposTarefasTipoId");
+                    b.HasIndex("TipoTarefaTipoId");
 
                     b.ToTable("Tarefa");
                 });
 
-            modelBuilder.Entity("GestaoTarefas2.Models.TiposTarefas", b =>
+            modelBuilder.Entity("GestaoTarefas2.Models.TipoTarefa", b =>
                 {
                     b.Property<int>("TipoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("TipoTarefa")
+                    b.Property<string>("TipoNome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TipoId");
 
-                    b.ToTable("TiposTarefas");
+                    b.ToTable("TipoTarefa");
                 });
 
             modelBuilder.Entity("GestaoTarefas2.Models.Funcionario", b =>
@@ -182,9 +182,9 @@ namespace GestaoTarefas2.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GestaoTarefas2.Models.TiposTarefas", "TiposTarefas")
+                    b.HasOne("GestaoTarefas2.Models.TipoTarefa", "TipoTarefa")
                         .WithMany("Tarefas")
-                        .HasForeignKey("TiposTarefasTipoId");
+                        .HasForeignKey("TipoTarefaTipoId");
                 });
 #pragma warning restore 612, 618
         }
