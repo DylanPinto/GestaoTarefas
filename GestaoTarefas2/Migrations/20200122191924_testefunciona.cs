@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoTarefas2.Migrations
 {
-    public partial class Correcaotest : Migration
+    public partial class testefunciona : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,16 +34,16 @@ namespace GestaoTarefas2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TiposTarefas",
+                name: "TipoTarefa",
                 columns: table => new
                 {
                     TipoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TipoTarefa = table.Column<string>(nullable: false)
+                    TipoNome = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TiposTarefas", x => x.TipoId);
+                    table.PrimaryKey("PK_TipoTarefa", x => x.TipoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,7 +89,7 @@ namespace GestaoTarefas2.Migrations
                     DataInicio = table.Column<DateTime>(nullable: false),
                     DataFim = table.Column<DateTime>(nullable: false),
                     TipoId = table.Column<int>(nullable: false),
-                    TiposTarefasTipoId = table.Column<int>(nullable: true),
+                    TipoTarefaTipoId = table.Column<int>(nullable: true),
                     Descricao = table.Column<string>(maxLength: 250, nullable: true)
                 },
                 constraints: table =>
@@ -102,9 +102,9 @@ namespace GestaoTarefas2.Migrations
                         principalColumn: "FuncionarioId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tarefa_TiposTarefas_TiposTarefasTipoId",
-                        column: x => x.TiposTarefasTipoId,
-                        principalTable: "TiposTarefas",
+                        name: "FK_Tarefa_TipoTarefa_TipoTarefaTipoId",
+                        column: x => x.TipoTarefaTipoId,
+                        principalTable: "TipoTarefa",
                         principalColumn: "TipoId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -125,9 +125,9 @@ namespace GestaoTarefas2.Migrations
                 column: "FuncionarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tarefa_TiposTarefasTipoId",
+                name: "IX_Tarefa_TipoTarefaTipoId",
                 table: "Tarefa",
-                column: "TiposTarefasTipoId");
+                column: "TipoTarefaTipoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -139,7 +139,7 @@ namespace GestaoTarefas2.Migrations
                 name: "Funcionario");
 
             migrationBuilder.DropTable(
-                name: "TiposTarefas");
+                name: "TipoTarefa");
 
             migrationBuilder.DropTable(
                 name: "Cargo");

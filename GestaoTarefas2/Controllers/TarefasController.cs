@@ -21,7 +21,7 @@ namespace GestaoTarefas2.Controllers
         // GET: Tarefas
         public async Task<IActionResult> Index()
         {
-            var gestaoTarefasDbContext = _context.Tarefa.Include(t => t.Funcionario);
+            var gestaoTarefasDbContext = _context.Tarefa.Include(t => t.Funcionario).Include(f =>f.TipoTarefa);
             return View(await gestaoTarefasDbContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace GestaoTarefas2.Controllers
 
             var tarefa = await _context.Tarefa
                 .Include(t => t.Funcionario)
+                .Include(f => f.TipoTarefa)
                 .FirstOrDefaultAsync(m => m.TarefaId == id);
             if (tarefa == null)
             {
@@ -49,6 +50,12 @@ namespace GestaoTarefas2.Controllers
         {
             ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome");
             ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoNome");
+
+            var userName = User.Identity.Name;
+            
+
+            ViewData["NomeOrdena"] = userName;
+
             return View();
         }
 

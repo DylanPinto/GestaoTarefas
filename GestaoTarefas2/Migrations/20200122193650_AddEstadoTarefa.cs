@@ -2,33 +2,21 @@
 
 namespace GestaoTarefas2.Migrations
 {
-    public partial class teste4 : Migration
+    public partial class AddEstadoTarefa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Descricao",
-                table: "Tarefa");
-
             migrationBuilder.AddColumn<string>(
-                name: "Desc",
+                name: "estadoTarefa",
                 table: "Tarefa",
-                maxLength: 250,
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Desc",
+                name: "estadoTarefa",
                 table: "Tarefa");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Descricao",
-                table: "Tarefa",
-                type: "nvarchar(250)",
-                maxLength: 250,
-                nullable: true);
         }
     }
 }
