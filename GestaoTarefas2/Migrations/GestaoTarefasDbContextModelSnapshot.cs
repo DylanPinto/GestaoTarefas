@@ -106,8 +106,7 @@ namespace GestaoTarefas2.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2")
-                        .HasMaxLength(60);
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(250)")
@@ -116,6 +115,10 @@ namespace GestaoTarefas2.Migrations
                     b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
 
+                    b.Property<string>("NomeOrdena")
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
+
                     b.Property<string>("NomeTarefa")
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
@@ -123,36 +126,35 @@ namespace GestaoTarefas2.Migrations
                     b.Property<int>("TipoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TipoTarefaTipoId")
+                    b.Property<int?>("TiposTarefasTipoId")
                         .HasColumnType("int");
 
                     b.Property<string>("estadoTarefa")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TarefaId");
 
                     b.HasIndex("FuncionarioId");
 
-                    b.HasIndex("TipoTarefaTipoId");
+                    b.HasIndex("TiposTarefasTipoId");
 
                     b.ToTable("Tarefa");
                 });
 
-            modelBuilder.Entity("GestaoTarefas2.Models.TipoTarefa", b =>
+            modelBuilder.Entity("GestaoTarefas2.Models.TiposTarefas", b =>
                 {
                     b.Property<int>("TipoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("TipoNome")
+                    b.Property<string>("TipoTarefa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TipoId");
 
-                    b.ToTable("TipoTarefa");
+                    b.ToTable("TiposTarefas");
                 });
 
             modelBuilder.Entity("GestaoTarefas2.Models.Funcionario", b =>
@@ -178,9 +180,9 @@ namespace GestaoTarefas2.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GestaoTarefas2.Models.TipoTarefa", "TipoTarefa")
+                    b.HasOne("GestaoTarefas2.Models.TiposTarefas", "TiposTarefas")
                         .WithMany("Tarefas")
-                        .HasForeignKey("TipoTarefaTipoId");
+                        .HasForeignKey("TiposTarefasTipoId");
                 });
 #pragma warning restore 612, 618
         }
