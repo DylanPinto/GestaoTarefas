@@ -129,6 +129,9 @@ namespace GestaoTarefas2.Migrations
                     b.Property<int?>("TiposTarefasTipoId")
                         .HasColumnType("int");
 
+                    b.Property<string>("estadoTarefa")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("TarefaId");
 
                     b.HasIndex("FuncionarioId");
