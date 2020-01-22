@@ -16,13 +16,16 @@
                 @Html.DisplayNameFor(model => model.NomeTarefa)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.NomeOrdena)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Funcionario)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DataInicio)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DataFim)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Funcionario)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TipoId)
@@ -43,13 +46,16 @@
                 @Html.DisplayFor(modelItem => item.NomeTarefa)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.NomeOrdena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Funcionario.Email)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.DataInicio)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DataFim)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Funcionario.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TipoId)
