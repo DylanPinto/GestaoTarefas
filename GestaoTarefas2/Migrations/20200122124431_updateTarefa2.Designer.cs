@@ -4,14 +4,16 @@ using GestaoTarefas2.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestaoTarefas2.Migrations
 {
     [DbContext(typeof(GestaoTarefasDbContext))]
-    partial class GestaoTarefasDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200122124431_updateTarefa2")]
+    partial class updateTarefa2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,15 +108,18 @@ namespace GestaoTarefas2.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2")
-                        .HasMaxLength(60);
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
                     b.Property<int>("FuncionarioId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("NomeDestinatario")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NomeTarefa")
                         .HasColumnType("nvarchar(60)")
@@ -123,7 +128,7 @@ namespace GestaoTarefas2.Migrations
                     b.Property<int>("TipoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TipoTarefaTipoId")
+                    b.Property<int?>("TiposTarefasTipoId")
                         .HasColumnType("int");
 
                     b.Property<string>("estadoTarefa")
@@ -134,25 +139,25 @@ namespace GestaoTarefas2.Migrations
 
                     b.HasIndex("FuncionarioId");
 
-                    b.HasIndex("TipoTarefaTipoId");
+                    b.HasIndex("TiposTarefasTipoId");
 
                     b.ToTable("Tarefa");
                 });
 
-            modelBuilder.Entity("GestaoTarefas2.Models.TipoTarefa", b =>
+            modelBuilder.Entity("GestaoTarefas2.Models.TiposTarefas", b =>
                 {
                     b.Property<int>("TipoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("TipoNome")
+                    b.Property<string>("TipoTarefa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TipoId");
 
-                    b.ToTable("TipoTarefa");
+                    b.ToTable("TiposTarefas");
                 });
 
             modelBuilder.Entity("GestaoTarefas2.Models.Funcionario", b =>
@@ -178,9 +183,9 @@ namespace GestaoTarefas2.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GestaoTarefas2.Models.TipoTarefa", "TipoTarefa")
+                    b.HasOne("GestaoTarefas2.Models.TiposTarefas", "TiposTarefas")
                         .WithMany("Tarefas")
-                        .HasForeignKey("TipoTarefaTipoId");
+                        .HasForeignKey("TiposTarefasTipoId");
                 });
 #pragma warning restore 612, 618
         }

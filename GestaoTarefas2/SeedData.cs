@@ -15,7 +15,7 @@ namespace GestaoTarefas2.Models
         {
             PopulateDepartamentos(db);
             PopulateCargos(db);
-            PopulateTiposTarefas(db);
+            PopulateTipoTarefa(db);
             PopulateFuncionarios(db);
         }
         public static void PopulateDepartamentos(GestaoTarefasDbContext db)
@@ -47,16 +47,16 @@ namespace GestaoTarefas2.Models
                 );
             db.SaveChanges();
         }
-        private static void PopulateTiposTarefas(GestaoTarefasDbContext db)
+        private static void PopulateTipoTarefa(GestaoTarefasDbContext db)
         {
-            if (db.TiposTarefas.Any()) return;
+            if (db.TipoTarefa.Any()) return;
 
-            db.TiposTarefas.AddRange(
-                new TiposTarefas { TipoTarefa = "Comprar" },
-                new TiposTarefas { TipoTarefa = "Transporte" },
-                new TiposTarefas { TipoTarefa = "Manutenção" },
-                new TiposTarefas { TipoTarefa = "Limpeza" },
-                new TiposTarefas { TipoTarefa = "Outra" }
+            db.TipoTarefa.AddRange(
+                new TipoTarefa { TipoNome = "Comprar" },
+                new TipoTarefa { TipoNome = "Transporte" },
+                new TipoTarefa { TipoNome = "Manutenção" },
+                new TipoTarefa { TipoNome = "Limpeza" },
+                new TipoTarefa { TipoNome = "Outra" }
                 );
             db.SaveChanges();
         }
@@ -137,6 +137,31 @@ namespace GestaoTarefas2.Models
 
 
             // Create other user accounts ...
+        }
+
+       
+
+        public static async Task CreateUser(UserManager<IdentityUser> userManager, string username, string ROLE)
+        {
+            const string PASSWORD = "Secret123$";
+            
+
+        IdentityUser user = await userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                user = new IdentityUser
+                {
+                    UserName = username,
+                    Email = username
+                };
+
+                await userManager.CreateAsync(user, PASSWORD);
+            }
+
+            if (!await userManager.IsInRoleAsync(user, ROLE))
+            {
+                await userManager.AddToRoleAsync(user, ROLE);
+            }
         }
 
         public static async Task CreateRolesAsync(RoleManager<IdentityRole> roleManager)

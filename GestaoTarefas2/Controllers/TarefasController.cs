@@ -19,9 +19,48 @@ namespace GestaoTarefas2.Controllers
         }
 
         // GET: Tarefas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
         {
-            return View(await _context.Tarefa.ToListAsync());
+
+            ViewData["CurrentSort"] = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            
+            
+               var tarefa = from t in _context.Tarefa.Include(f => f.Funcionario) select t;
+
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    tarefa = tarefa.Where(t => t.NomeTarefa.Contains(searchString));
+                }
+
+             if (User.IsInRole("funcionario"))
+            {
+                tarefa = from t in _context.Tarefa.Include(f => f.Funcionario)
+                             .Where(f => f.Funcionario.Email.Contains(User.Identity.Name)) select t;
+
+            }
+
+
+
+            int pageSize = 3;
+
+            return View(await PaginatedList<Tarefa>.CreateAsync(tarefa.AsNoTracking(), pageNumber ?? 1, pageSize));  
         }
 
         // GET: Tarefas/Details/5
@@ -33,6 +72,7 @@ namespace GestaoTarefas2.Controllers
             }
 
             var tarefa = await _context.Tarefa
+                .Include(t => t.Funcionario)
                 .FirstOrDefaultAsync(m => m.TarefaId == id);
             if (tarefa == null)
             {
@@ -45,6 +85,8 @@ namespace GestaoTarefas2.Controllers
         // GET: Tarefas/Create
         public IActionResult Create()
         {
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome");
+            ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoNome");
             return View();
         }
 
@@ -53,7 +95,7 @@ namespace GestaoTarefas2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao")] Tarefa tarefa)
+        public async Task<IActionResult> Create([Bind("TarefaId,NomeTarefa,DataInicio,DataFim,FuncionarioId,TipoId,Descricao,estadoTarefa")] Tarefa tarefa)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +103,8 @@ namespace GestaoTarefas2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
+            ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoNome");
             return View(tarefa);
         }
 
@@ -77,6 +121,8 @@ namespace GestaoTarefas2.Controllers
             {
                 return NotFound();
             }
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
+            ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoNome");
             return View(tarefa);
         }
 
@@ -85,7 +131,7 @@ namespace GestaoTarefas2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao")] Tarefa tarefa)
+        public async Task<IActionResult> Edit(int id, [Bind("TarefaId,NomeTarefa,DataInicio,DataFim,FuncionarioId,TipoId,Descricao,estadoTarefa")] Tarefa tarefa)
         {
             if (id != tarefa.TarefaId)
             {
@@ -101,7 +147,7 @@ namespace GestaoTarefas2.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TarefasExists(tarefa.TarefaId))
+                    if (!TarefaExists(tarefa.TarefaId))
                     {
                         return NotFound();
                     }
@@ -112,6 +158,8 @@ namespace GestaoTarefas2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
+            ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoNome");
             return View(tarefa);
         }
 
@@ -124,6 +172,7 @@ namespace GestaoTarefas2.Controllers
             }
 
             var tarefa = await _context.Tarefa
+                .Include(t => t.Funcionario)
                 .FirstOrDefaultAsync(m => m.TarefaId == id);
             if (tarefa == null)
             {
@@ -144,7 +193,7 @@ namespace GestaoTarefas2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TarefasExists(int id)
+        private bool TarefaExists(int id)
         {
             return _context.Tarefa.Any(e => e.TarefaId == id);
         }

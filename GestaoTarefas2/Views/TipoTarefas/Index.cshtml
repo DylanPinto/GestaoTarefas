@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GestaoTarefas2.Models.TiposTarefas>
+﻿@model IEnumerable<GestaoTarefas2.Models.TipoTarefa>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TipoTarefa)
+                @Html.DisplayNameFor(model => model.TipoNome)
             </th>
             <th></th>
         </tr>
@@ -22,7 +22,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.TipoTarefa)
+                @Html.DisplayFor(modelItem => item.TipoNome)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TipoId">Edit</a> |

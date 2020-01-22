@@ -4,14 +4,16 @@ using GestaoTarefas2.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestaoTarefas2.Migrations
 {
     [DbContext(typeof(GestaoTarefasDbContext))]
-    partial class GestaoTarefasDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200122125950_updateTarefa3")]
+    partial class updateTarefa3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,15 +108,18 @@ namespace GestaoTarefas2.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2")
-                        .HasMaxLength(60);
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
                     b.Property<int>("FuncionarioId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("NomeDestinatario")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NomeTarefa")
                         .HasColumnType("nvarchar(60)")
