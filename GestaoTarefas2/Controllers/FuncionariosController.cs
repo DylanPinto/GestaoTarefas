@@ -6,17 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GestaoTarefas2.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNet.Identity;
 
 namespace GestaoTarefas2.Controllers
 {
     public class FuncionariosController : Controller
     {
         private readonly GestaoTarefasDbContext _context;
+        
 
         public FuncionariosController(GestaoTarefasDbContext context)
         {
             _context = context;
         }
+
+       
 
         // GET: Funcionarios
         public async Task<IActionResult> Index(
@@ -101,8 +106,10 @@ namespace GestaoTarefas2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FuncionarioId,Nome,SobreNome,Sexo,NTelemovel,Email,DepartamentoId,CargoId")] Funcionario funcionario)
         {
+ 
             if (ModelState.IsValid)
             {
+              
                 _context.Add(funcionario);
                 await _context.SaveChangesAsync();
 
@@ -110,8 +117,13 @@ namespace GestaoTarefas2.Controllers
                 return View("Success");
 
             }
+            
+
+
             ViewData["DepartamentoId"] = new SelectList(_context.Departamento, "DepartamentoId", "Nome", funcionario.DepartamentoId);
             ViewData["CargoId"] = new SelectList(_context.Cargo, "CardoId", "NomeCargo",funcionario.CargoId);
+           
+            
             return View(funcionario);
         }
 
@@ -218,5 +230,8 @@ namespace GestaoTarefas2.Controllers
         {
             return _context.Funcionario.Any(e => e.FuncionarioId == id);
         }
+
+       
+
     }
 }

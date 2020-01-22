@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace GestaoTarefas2.Models
 {
-    public class TiposTarefas
+    public class TipoTarefa
     {
         [Key]
+        
         public int TipoId { get; set; }
         [Required]
-        public string TipoTarefa { get; set; }
+        public string TipoNome { get; set; }
 
         public ICollection<Tarefa> Tarefas { get; set; }
     }

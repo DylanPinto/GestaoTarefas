@@ -22,7 +22,7 @@ namespace GestaoTarefas2.Models
 
         public DbSet<GestaoTarefas2.Models.Cargo> Cargo { get; set; }
 
-        public DbSet<GestaoTarefas2.Models.TiposTarefas> TiposTarefas { get; set; }
+        public DbSet<GestaoTarefas2.Models.TipoTarefa> TipoTarefa { get; set; }
 
     }
 }
