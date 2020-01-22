@@ -26,7 +26,7 @@ namespace GestaoTarefas2.Models
         public DateTime DataFim { get; set; }
 
         public int TipoId { get; set; }
-        public TiposTarefas TiposTarefas { get; set; }
+        public TipoTarefa TipoTarefa { get; set; }
 
         [StringLength(250)]
         public string Descricao { get; set; }

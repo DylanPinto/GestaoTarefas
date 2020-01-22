@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoTarefas2.Migrations
 {
     [DbContext(typeof(GestaoTarefasDbContext))]
-    [Migration("20200118185122_initial3")]
-    partial class initial3
+    [Migration("20200122165155_updateTarefa5")]
+    partial class updateTarefa5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -130,6 +130,9 @@ namespace GestaoTarefas2.Migrations
 
                     b.Property<int?>("TiposTarefasTipoId")
                         .HasColumnType("int");
+
+                    b.Property<string>("estadoTarefa")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TarefaId");
 
