@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoTarefas2.Migrations
 {
-    public partial class updateTarefa5 : Migration
+    public partial class Correcaotest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -90,8 +90,7 @@ namespace GestaoTarefas2.Migrations
                     DataFim = table.Column<DateTime>(nullable: false),
                     TipoId = table.Column<int>(nullable: false),
                     TiposTarefasTipoId = table.Column<int>(nullable: true),
-                    Descricao = table.Column<string>(maxLength: 250, nullable: true),
-                    estadoTarefa = table.Column<string>(nullable: true)
+                    Descricao = table.Column<string>(maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {

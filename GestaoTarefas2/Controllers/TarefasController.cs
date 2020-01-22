@@ -21,8 +21,7 @@ namespace GestaoTarefas2.Controllers
         // GET: Tarefas
         public async Task<IActionResult> Index()
         {
-            var gestaoTarefasDbContext = _context.Tarefa.Include(t => t.Funcionario);
-            return View(await gestaoTarefasDbContext.ToListAsync());
+            return View(await _context.Tarefa.ToListAsync());
         }
 
         // GET: Tarefas/Details/5
@@ -34,7 +33,6 @@ namespace GestaoTarefas2.Controllers
             }
 
             var tarefa = await _context.Tarefa
-                .Include(t => t.Funcionario)
                 .FirstOrDefaultAsync(m => m.TarefaId == id);
             if (tarefa == null)
             {
@@ -47,8 +45,6 @@ namespace GestaoTarefas2.Controllers
         // GET: Tarefas/Create
         public IActionResult Create()
         {
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome");
-            ViewData["TipoId"] = new SelectList(_context.TiposTarefas, "TipoId", "TipoTarefa");
             return View();
         }
 
@@ -57,7 +53,7 @@ namespace GestaoTarefas2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao,estadoTarefa")] Tarefa tarefa)
+        public async Task<IActionResult> Create([Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao")] Tarefa tarefa)
         {
             if (ModelState.IsValid)
             {
@@ -65,8 +61,6 @@ namespace GestaoTarefas2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
-            ViewData["TipoId"] = new SelectList(_context.TiposTarefas, "TipoId", "TipoTarefa", tarefa.TipoId);
             return View(tarefa);
         }
 
@@ -83,8 +77,6 @@ namespace GestaoTarefas2.Controllers
             {
                 return NotFound();
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
-            ViewData["TipoId"] = new SelectList(_context.TiposTarefas, "TipoId", "TipoTarefa", tarefa.TipoId);
             return View(tarefa);
         }
 
@@ -93,7 +85,7 @@ namespace GestaoTarefas2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao,estadoTarefa")] Tarefa tarefa)
+        public async Task<IActionResult> Edit(int id, [Bind("TarefaId,NomeTarefa,NomeOrdena,FuncionarioId,DataInicio,DataFim,TipoId,Descricao")] Tarefa tarefa)
         {
             if (id != tarefa.TarefaId)
             {
@@ -109,7 +101,7 @@ namespace GestaoTarefas2.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TarefaExists(tarefa.TarefaId))
+                    if (!TarefasExists(tarefa.TarefaId))
                     {
                         return NotFound();
                     }
@@ -120,8 +112,6 @@ namespace GestaoTarefas2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
-            ViewData["TipoId"] = new SelectList(_context.TiposTarefas, "TipoId", "TipoTarefa", tarefa.TipoId);
             return View(tarefa);
         }
 
@@ -134,7 +124,6 @@ namespace GestaoTarefas2.Controllers
             }
 
             var tarefa = await _context.Tarefa
-                .Include(t => t.Funcionario)
                 .FirstOrDefaultAsync(m => m.TarefaId == id);
             if (tarefa == null)
             {
@@ -155,7 +144,7 @@ namespace GestaoTarefas2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TarefaExists(int id)
+        private bool TarefasExists(int id)
         {
             return _context.Tarefa.Any(e => e.TarefaId == id);
         }

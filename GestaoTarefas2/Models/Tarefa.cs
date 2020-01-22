@@ -30,7 +30,5 @@ namespace GestaoTarefas2.Models
 
         [StringLength(250)]
         public string Descricao { get; set; }
-
-        public string estadoTarefa { get; set; }
     }
 }
