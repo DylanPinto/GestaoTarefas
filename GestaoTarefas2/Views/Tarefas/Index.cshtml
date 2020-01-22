@@ -1,71 +1,109 @@
-﻿@model IEnumerable<GestaoTarefas2.Models.Tarefa>
+﻿@model PaginatedList<GestaoTarefas2.Models.Tarefa>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Tarefas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar Nova</a>
 </p>
+
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Pesquisar: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Procurar" class="btn btn-primary" /> |
+            <a asp-action="Index">Voltar a lista</a>
+        </p>
+    </div>
+</form>
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NomeTarefa)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">Nome Tarefa</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NomeOrdena)
+                Nome Ordena
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FuncionarioId)
+                Destinatario
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataInicio)
+                Data de Inicio
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataFim)
+                Data de Finalização
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TipoId)
+                Tipo de tarefa
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descricao)
+                Descrição
+            </th>
+            <th>
+                Estado
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NomeTarefa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NomeOrdena)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FuncionarioId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataFim)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TarefaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TarefaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TarefaId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomeTarefa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomeOrdena)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Funcionario.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoTarefa.TipoNome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.estadoTarefa)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TarefaId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.TarefaId">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TarefaId">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex -1)"
+   asp-route-curentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-secondary @prevDisabled">Anterior</a>
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-curentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-secondary @nextDisabled">Proxima</a>

@@ -9,7 +9,6 @@ namespace GestaoTarefas2.Models
     public class TipoTarefa
     {
         [Key]
-        
         public int TipoId { get; set; }
         [Required]
         public string TipoNome { get; set; }

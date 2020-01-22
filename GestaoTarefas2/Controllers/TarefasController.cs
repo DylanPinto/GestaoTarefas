@@ -19,10 +19,48 @@ namespace GestaoTarefas2.Controllers
         }
 
         // GET: Tarefas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
         {
-            var gestaoTarefasDbContext = _context.Tarefa.Include(t => t.Funcionario).Include(f =>f.TipoTarefa);
-            return View(await gestaoTarefasDbContext.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var tarefa = from t in _context.Tarefa.Include(f => f.Funcionario).Include(tr =>tr.TipoTarefa)
+                         select t;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                tarefa = tarefa.Where(t => t.NomeTarefa.Contains(searchString)|| t.Funcionario.Nome.Contains(searchString));
+            }
+
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    tarefa = tarefa.OrderByDescending(t => t.NomeTarefa);
+                    break;
+                default:
+                    tarefa = tarefa.OrderBy(t => t.NomeTarefa);
+                    break;
+
+            }
+
+            int pageSize = 3;
+
+            return View(await PaginatedList<Tarefa>.CreateAsync(tarefa.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Tarefas/Details/5
