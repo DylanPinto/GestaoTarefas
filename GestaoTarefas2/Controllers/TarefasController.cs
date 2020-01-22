@@ -48,7 +48,7 @@ namespace GestaoTarefas2.Controllers
         public IActionResult Create()
         {
             ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome");
-            ViewData["TipoId"] = new SelectList(_context.TiposTarefas, "TipoId", "TipoTarefa");
+            ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoNome");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace GestaoTarefas2.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
-            ViewData["TipoId"] = new SelectList(_context.TiposTarefas, "TipoId", "TipoTarefa", tarefa.TipoId);
+            ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoMome", tarefa.TipoId);
             return View(tarefa);
         }
 
@@ -84,7 +84,7 @@ namespace GestaoTarefas2.Controllers
                 return NotFound();
             }
             ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
-            ViewData["TipoId"] = new SelectList(_context.TiposTarefas, "TipoId", "TipoTarefa", tarefa.TipoId);
+            ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoNome", tarefa.TipoId);
             return View(tarefa);
         }
 
@@ -121,7 +121,7 @@ namespace GestaoTarefas2.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
-            ViewData["TipoId"] = new SelectList(_context.TiposTarefas, "TipoId", "TipoTarefa", tarefa.TipoId);
+            ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoNome", tarefa.TipoId);
             return View(tarefa);
         }
 
