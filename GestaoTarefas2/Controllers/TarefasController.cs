@@ -26,6 +26,8 @@ namespace GestaoTarefas2.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.DateSortParm_end = sortOrder == "Date_end" ? "date_desc_end" : "Date_end";
             ViewData["CurrentFilter"] = searchString;
 
             if (searchString != null)
@@ -41,7 +43,9 @@ namespace GestaoTarefas2.Controllers
 
             var tarefa = from t in _context.Tarefa.Include(f => f.Funcionario).Include(tr =>tr.TipoTarefa)
                          select t;
-            if (!String.IsNullOrEmpty(searchString))
+            
+
+                if (!String.IsNullOrEmpty(searchString))
             {
                 tarefa = tarefa.Where(t => t.NomeTarefa.Contains(searchString)|| t.Funcionario.Nome.Contains(searchString));
             }
@@ -51,6 +55,18 @@ namespace GestaoTarefas2.Controllers
             {
                 case "name_desc":
                     tarefa = tarefa.OrderByDescending(t => t.NomeTarefa);
+                    break;
+                case "Date":
+                    tarefa = tarefa.OrderBy(t => t.DataInicio);
+                    break;
+                case "date_desc":
+                    tarefa = tarefa.OrderByDescending(t => t.DataInicio);
+                    break;
+                case "Date_end":
+                    tarefa = tarefa.OrderBy(t => t.DataFim);
+                    break;
+                case "date_desc_end":
+                    tarefa = tarefa.OrderByDescending(t => t.DataFim);
                     break;
                 default:
                     tarefa = tarefa.OrderBy(t => t.NomeTarefa);
@@ -88,12 +104,6 @@ namespace GestaoTarefas2.Controllers
         {
             ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome");
             ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoNome");
-
-            var userName = User.Identity.Name;
-            
-
-            ViewData["NomeOrdena"] = userName;
-
             return View();
         }
 

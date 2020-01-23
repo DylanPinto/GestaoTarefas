@@ -35,10 +35,10 @@
                 Destinatario
             </th>
             <th>
-                Data de Inicio
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">Data de Inicio</a> 
             </th>
             <th>
-                Data de Finalização
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm_end"]">Data de Finalização</a> 
             </th>
             <th>
                 Tipo de tarefa

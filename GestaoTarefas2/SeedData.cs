@@ -76,13 +76,16 @@ namespace GestaoTarefas2.Models
 
         public static async Task PopulateUsersAsync(UserManager<IdentityUser> userManager)
         {
-            const string ADMIN_USERNAME = "admin@ipg.pt";
+            const string ADMIN_USERNAME = "Admin";
+            const string ADMIN_EMAIL = "admin@ipg.pt";
             const string ADMIN_PASSWORD = "Secret123$";
 
-            const string MANAGER_USERNAME = "peter@ipg.pt";
+            const string MANAGER_USERNAME = "Peter";
+            const string MANAGER_EMAIL = "peter@ipg.pt";
             const string MANAGER_PASSWORD = "Secret123$";
 
-            const string FUNC_USERNAME = "truta@ipg.pt";
+            const string FUNC_USERNAME = "Paulo";
+            const string FUNC_EMAIL = "paulo@ipg.pt";
             const string FUNC_PASSWORD = "Secret123$";
 
             IdentityUser user = await userManager.FindByNameAsync(ADMIN_USERNAME);
@@ -91,7 +94,7 @@ namespace GestaoTarefas2.Models
                 user = new IdentityUser
                 {
                     UserName = ADMIN_USERNAME,
-                    Email = ADMIN_USERNAME
+                    Email = ADMIN_EMAIL
                 };
 
                 await userManager.CreateAsync(user, ADMIN_PASSWORD);
@@ -108,7 +111,7 @@ namespace GestaoTarefas2.Models
                 user = new IdentityUser
                 {
                     UserName = MANAGER_USERNAME,
-                    Email = MANAGER_USERNAME
+                    Email = MANAGER_EMAIL
                 };
 
                 await userManager.CreateAsync(user, MANAGER_PASSWORD);
@@ -125,7 +128,7 @@ namespace GestaoTarefas2.Models
                 user = new IdentityUser
                 {
                     UserName = FUNC_USERNAME,
-                    Email = FUNC_USERNAME
+                    Email = FUNC_EMAIL
                 };
 
                 await userManager.CreateAsync(user, FUNC_PASSWORD);
@@ -141,28 +144,7 @@ namespace GestaoTarefas2.Models
 
        
 
-        public static async Task CreateUser(UserManager<IdentityUser> userManager, string username, string ROLE)
-        {
-            const string PASSWORD = "Secret123$";
-            
-
-        IdentityUser user = await userManager.FindByNameAsync(username);
-            if (user == null)
-            {
-                user = new IdentityUser
-                {
-                    UserName = username,
-                    Email = username
-                };
-
-                await userManager.CreateAsync(user, PASSWORD);
-            }
-
-            if (!await userManager.IsInRoleAsync(user, ROLE))
-            {
-                await userManager.AddToRoleAsync(user, ROLE);
-            }
-        }
+       
 
         public static async Task CreateRolesAsync(RoleManager<IdentityRole> roleManager)
         {
