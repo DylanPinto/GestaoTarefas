@@ -45,10 +45,20 @@ namespace GestaoTarefas2.Controllers
                          select t;
 
 
+            if (User.IsInRole("funcionario"))
+            {
+                tarefa = tarefa.Where(t => t.Funcionario.Nome.Contains(User.Identity.Name) || t.NomeOrdena.Contains(User.Identity.Name));
+
+              
+            }
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 tarefa = tarefa.Where(t => t.NomeTarefa.Contains(searchString) || t.Funcionario.Nome.Contains(searchString));
             }
+
+            
+
 
 
             switch (sortOrder)
