@@ -41,13 +41,13 @@ namespace GestaoTarefas2.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var tarefa = from t in _context.Tarefa.Include(f => f.Funcionario).Include(tr =>tr.TipoTarefa)
+            var tarefa = from t in _context.Tarefa.Include(f => f.Funcionario).Include(tr => tr.TipoTarefa)
                          select t;
-            
 
-                if (!String.IsNullOrEmpty(searchString))
+
+            if (!String.IsNullOrEmpty(searchString))
             {
-                tarefa = tarefa.Where(t => t.NomeTarefa.Contains(searchString)|| t.Funcionario.Nome.Contains(searchString));
+                tarefa = tarefa.Where(t => t.NomeTarefa.Contains(searchString) || t.Funcionario.Nome.Contains(searchString));
             }
 
 
@@ -177,6 +177,56 @@ namespace GestaoTarefas2.Controllers
             }
             ViewData["FuncionarioId"] = new SelectList(_context.Funcionario, "FuncionarioId", "Nome", tarefa.FuncionarioId);
             ViewData["TipoId"] = new SelectList(_context.TipoTarefa, "TipoId", "TipoNome", tarefa.TipoId);
+            return View(tarefa);
+        }
+        //GET:Tarefas/Estado/
+        public async Task<IActionResult> Estado(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tarefa = await _context.Tarefa.FindAsync(id);
+            if (tarefa == null)
+            {
+                return NotFound();
+            }
+
+            return View(tarefa);
+        }
+
+        //Post: Tarefas/Estado
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Estado(int id, [Bind("estadoTarefa")] Tarefa tarefa)
+        {
+            if (id != tarefa.TarefaId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(tarefa);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TarefaExists(tarefa.TarefaId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            
             return View(tarefa);
         }
 
