@@ -17,6 +17,7 @@ namespace GestaoTarefas2.Models
             PopulateCargos(db);
             PopulateTipoTarefa(db);
             PopulateFuncionarios(db);
+            PopulateTarefas(db);
         }
         public static void PopulateDepartamentos(GestaoTarefasDbContext db)
         {
@@ -74,6 +75,19 @@ namespace GestaoTarefas2.Models
             db.SaveChanges();
         }
 
+       /* public static void PopulateTarefas(GestaoTarefasDbContext db)
+        {
+            if (db.Tarefa.Any()) return;
+
+
+            db.Tarefa.AddRange(
+                new Tarefa { NomeTarefa = "", NomeOrdena = "", FuncionarioId = 2, /*DataInicio = "", DataFim ="" TipoId = 2, Descricao = "", estadoTarefa = ""},
+                new Tarefa { NomeTarefa = "", NomeOrdena = "", FuncionarioId = 2, /*DataInicio = "", DataFim ="" TipoId = 2, Descricao = "", estadoTarefa = "" },
+                new Tarefa { NomeTarefa = "", NomeOrdena = "", FuncionarioId = 2, /*DataInicio = "", DataFim ="" TipoId = 2, Descricao = "", estadoTarefa = "" },
+                new Tarefa { NomeTarefa = "", NomeOrdena = "", FuncionarioId = 2, /*DataInicio = "", DataFim ="" TipoId = 2, Descricao = "", estadoTarefa = "" }
+                );
+            db.SaveChanges();
+        } */
         public static async Task PopulateUsersAsync(UserManager<IdentityUser> userManager)
         {
             const string ADMIN_USERNAME = "Admin";
