@@ -81,10 +81,10 @@ namespace GestaoTarefas2.Models
 
 
             db.Tarefa.AddRange(
-                new Tarefa { NomeTarefa = "Aquecedores", NomeOrdena = "Martim", FuncionarioId = 2, DataInicio =DateTime.Parse ("12-01-2020"), DataFim =DateTime.Parse ("15-01-2020"), TipoId = 3, Descricao = "Arranjar os aquecedores da sala de informática", estadoTarefa = "FALSE"},
-                new Tarefa { NomeTarefa = "Wi-fi", NomeOrdena = "Dylan", FuncionarioId = 3, DataInicio = DateTime.Parse("02-02-2020"), DataFim = DateTime.Parse("03-02-2020"), TipoId = 3, Descricao = "Não existe internet no departamento de contabilidade", estadoTarefa = "FALSE" },
-                new Tarefa { NomeTarefa = "Orçamento", NomeOrdena = "Paulo", FuncionarioId = 4, DataInicio = DateTime.Parse("22-03-2020"), DataFim = DateTime.Parse("23-03-2020"), TipoId = 5, Descricao = "Fazer um orçamento para renovar os materiais da cantina ", estadoTarefa = "FALSE" },
-                new Tarefa { NomeTarefa = "Ementa", NomeOrdena = "Dylan", FuncionarioId = 1, DataInicio = DateTime.Parse("29-04-2020"), DataFim = DateTime.Parse("15-05-2020"), TipoId = 5, Descricao = "Ementa para o dia de Erasmus", estadoTarefa = "FALSE" }
+                new Tarefa { NomeTarefa = "Aquecedores", NomeOrdena = "Martim", FuncionarioId = 2, DataInicio =DateTime.Parse ("12-01-2020"), DataFim =DateTime.Parse ("15-01-2020"), TipoId = 3, Descricao = "Arranjar os aquecedores da sala de informática", estadoTarefa = "Incompleta"},
+                new Tarefa { NomeTarefa = "Wi-fi", NomeOrdena = "Dylan", FuncionarioId = 3, DataInicio = DateTime.Parse("02-02-2020"), DataFim = DateTime.Parse("03-02-2020"), TipoId = 3, Descricao = "Não existe internet no departamento de contabilidade", estadoTarefa = "Incompleta" },
+                new Tarefa { NomeTarefa = "Orçamento", NomeOrdena = "Paulo", FuncionarioId = 4, DataInicio = DateTime.Parse("22-03-2020"), DataFim = DateTime.Parse("23-03-2020"), TipoId = 5, Descricao = "Fazer um orçamento para renovar os materiais da cantina ", estadoTarefa = "Incompleta" },
+                new Tarefa { NomeTarefa = "Ementa", NomeOrdena = "Dylan", FuncionarioId = 1, DataInicio = DateTime.Parse("29-04-2020"), DataFim = DateTime.Parse("15-05-2020"), TipoId = 5, Descricao = "Ementa para o dia de Erasmus", estadoTarefa = "Incompleta" }
                 );
             db.SaveChanges();
         } 
